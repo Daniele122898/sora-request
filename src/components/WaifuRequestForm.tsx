@@ -79,54 +79,78 @@ class WaifuRequestForm extends React.Component<Props, State> {
         this.setState((state)=> ({ request: {...state.request, rarity } }));
     }
 
+    getRarityString = () => {
+        switch(this.state.request.rarity) {
+            case WaifuRarity.Common: 
+                return "Common";
+            case WaifuRarity.Uncommon: 
+                return "Uncommon";
+            case WaifuRarity.Rare: 
+                return "Rare";
+            case WaifuRarity.Epic: 
+                return "Epic";
+            case WaifuRarity.UltimateWaifu: 
+                return "Ultimate Waifu";
+            case WaifuRarity.Special: 
+                return "Special";
+
+        }
+    };
+
     render() {
         return (
-            <div>
-                <form className="form" onSubmit={this.onSubmit}>
-                    <input 
-                    className="text-input"
-                    type="text"
-                    placeholder="Waifu Name"
-                    value={this.state.request.name}
-                    onChange={this.onNameChange}
-                    />
-                    <input 
-                    className="text-input"
-                    type="text"
-                    placeholder="Image URL (Gif if Ultimate Waifu)"
-                    value={this.state.request.imageUrl}
-                    onChange={this.onUrlChange}
-                    />
-                    <select
-                        className="select"
-                        value={this.state.request.rarity}
-                        onChange={this.onRarityChange}
-                    >
-                        <option value={WaifuRarity.Common.toLocaleString()}>Common</option>
-                        <option value={WaifuRarity.Uncommon.toLocaleString()}>Uncommon</option>
-                        <option value={WaifuRarity.Rare.toLocaleString()}>Rare</option>
-                        <option value={WaifuRarity.Epic.toLocaleString()}>Epic</option>
-                        <option value={WaifuRarity.UltimateWaifu.toLocaleString()}>Ultimate Waifu</option>
-                        <option value={WaifuRarity.Special.toLocaleString()}>Special</option>
-                    </select>
-                    <button className="button">{this.state.buttonText}</button>
-                </form>
-                { this.state.request.imageUrl && 
-                    <div className="card">
-                        <div className="crop pop">
-                            <img src={this.state.request.imageUrl} alt="Waifu Image"/>
-                        </div>
-                        <div className="card-body card-body--title">
-                            <h5 className="card-title">Zero Two</h5>
-                        </div>
-                        <ul className="list-group list-group-flush">
-                            <li className="list-group-item">Ultimate Waifu</li>
-                        </ul>
-                        <div className="card-body card-body--id">
-                            <p className="card-text"><span className="waifuId">ID: 1</span></p>
-                        </div>
-                    </div>
-                }
+            <div className="split-between">
+                <div className="split-between-70">
+                <h2 className="image-preview--title">Enter Details</h2>
+                    <form className="form" onSubmit={this.onSubmit}>
+                        <input 
+                        className="text-input"
+                        type="text"
+                        placeholder="Waifu Name"
+                        value={this.state.request.name}
+                        onChange={this.onNameChange}
+                        />
+                        <input 
+                        className="text-input"
+                        type="text"
+                        placeholder="Image URL (Gif if Ultimate Waifu)"
+                        value={this.state.request.imageUrl}
+                        onChange={this.onUrlChange}
+                        />
+                        <select
+                            className="select"
+                            value={this.state.request.rarity}
+                            onChange={this.onRarityChange}
+                        >
+                            <option value={WaifuRarity.Common.toLocaleString()}>Common</option>
+                            <option value={WaifuRarity.Uncommon.toLocaleString()}>Uncommon</option>
+                            <option value={WaifuRarity.Rare.toLocaleString()}>Rare</option>
+                            <option value={WaifuRarity.Epic.toLocaleString()}>Epic</option>
+                            <option value={WaifuRarity.UltimateWaifu.toLocaleString()}>Ultimate Waifu</option>
+                            <option value={WaifuRarity.Special.toLocaleString()}>Special</option>
+                        </select>
+                        <button className="button">{this.state.buttonText}</button>
+                    </form>
+                </div>
+                <div className="split-between-30 center">
+                    <h2 className="image-preview--title">Preview</h2>
+                    { this.state.request.imageUrl && 
+                            <div className="card">
+                                <div className="crop pop">
+                                    <img src={this.state.request.imageUrl} alt="Waifu Image"/>
+                                </div>
+                                <div className="card-body card-body--title">
+                                    <h5 className="card-title">{this.state.request.name ? this.state.request.name : 'Name' }</h5>
+                                </div>
+                                <ul className="list-group list-group-flush">
+                                    <li className="list-group-item">{this.getRarityString()}</li>
+                                </ul>
+                                <div className="card-body card-body--id">
+                                    <p className="card-text"><span className="waifuId">ID: 1</span></p>
+                                </div>
+                            </div>
+                    }
+                </div>
             </div>
         );
     }

@@ -1,5 +1,73 @@
 .content-container {
-  max-width: 80rem;
+  max-width: 100rem;
   margin: 0 auto;
   padding: 0 $m-size;
+}
+
+.split-between {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: $s-size;
+
+  @media (min-width: $desktop-breakpoint) {
+    flex-direction: row;
+  }
+}
+
+.center {
+  justify-self: center
+}
+
+.split-between-20 {
+  width: 100%;
+  @media (min-width: $desktop-breakpoint) {
+    width: 20%;
+  }
+}
+
+.split-between-30 {
+  width: 100%;
+  @media (min-width: $desktop-breakpoint) {
+    width: 30%;
+  }
+}
+
+.split-between-40 {
+  width: 100%;
+  @media (min-width: $desktop-breakpoint) {
+    width: 40%;
+  }
+}
+
+.split-between-50 {
+  width: 100%;
+  @media (min-width: $desktop-breakpoint) {
+    width: 50%;
+  }
+}
+
+.split-between-60 {
+  width: 100%;
+  @media (min-width: $desktop-breakpoint) {
+    width: 60%;
+  }
+}
+
+.split-between-70 {
+  width: 100%;
+  @media (min-width: $desktop-breakpoint) {
+    width: 70%;
+  }
+}
+
+.split-between-80 {
+  width: 100%;
+  @media (min-width: $desktop-breakpoint) {
+    width: 80%;
+  }
+}
+
+.split-between-100 {
+  width: 100%;
 }
