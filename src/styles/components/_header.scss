@@ -1,0 +1,21 @@
+.header {
+  background: $sora;
+}
+
+.header__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $s-size 0;
+}
+
+.header__title {
+  color: white;
+  text-decoration: none;
+  font-family: 'Source Sans Pro';
+
+  h1 {
+    margin: 0;
+    font-weight: normal;
+  }
+}
