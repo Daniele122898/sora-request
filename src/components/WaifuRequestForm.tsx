@@ -44,6 +44,7 @@ class WaifuRequestForm extends React.Component<Props, State> {
     onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // check before submitting
+        // first let's check the image
         const req = this.state.request;
         if (!req.imageUrl.startsWith('http')) {
             this.setState(() => 
@@ -58,6 +59,13 @@ class WaifuRequestForm extends React.Component<Props, State> {
             ({ error: 'Image Url should be an URL to an image!' }));
             return;
         }
+        // now check name
+        if (this.state.request.name.length < 3) {
+            this.setState(() => ({
+                error: 'Name should be no less than 3 characters!'
+            }));
+            return;
+        }
 
         this.props.onSubmit(this.state.request);
     };
@@ -70,7 +78,7 @@ class WaifuRequestForm extends React.Component<Props, State> {
 
     onUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const imageUrl = e.target.value;
-        if (imageUrl.length > 200) return;
+        if (imageUrl.length > 300) return;
         this.setState((state)=> ({ request: {...state.request, imageUrl } }));
     }
     
@@ -103,6 +111,7 @@ class WaifuRequestForm extends React.Component<Props, State> {
                 <div className="split-between-70">
                 <h2 className="image-preview--title">Enter Details</h2>
                     <form className="form" onSubmit={this.onSubmit}>
+                        {this.state.error && <p className="form__error">{this.state.error}</p>}
                         <input 
                         className="text-input"
                         type="text"
@@ -134,22 +143,23 @@ class WaifuRequestForm extends React.Component<Props, State> {
                 </div>
                 <div className="split-between-30 center">
                     <h2 className="image-preview--title">Preview</h2>
-                    { this.state.request.imageUrl && 
-                            <div className="card">
-                                <div className="crop pop">
-                                    <img src={this.state.request.imageUrl} alt="Waifu Image"/>
-                                </div>
-                                <div className="card-body card-body--title">
-                                    <h5 className="card-title">{this.state.request.name ? this.state.request.name : 'Name' }</h5>
-                                </div>
-                                <ul className="list-group list-group-flush">
-                                    <li className="list-group-item">{this.getRarityString()}</li>
-                                </ul>
-                                <div className="card-body card-body--id">
-                                    <p className="card-text"><span className="waifuId">ID: 1</span></p>
-                                </div>
-                            </div>
-                    }
+                    <div className="card">
+                        <div className="crop pop">
+                            <img src={this.state.request.imageUrl ? 
+                                this.state.request.imageUrl : 
+                                "https://cdn.argonaut.pw/lxvFBNdShIvb4efQvT60d99iXlN4TFXe.png"} 
+                                alt="Waifu Image"/>
+                        </div>
+                        <div className="card-body card-body--title">
+                            <h5 className="card-title">{this.state.request.name ? this.state.request.name : 'Name' }</h5>
+                        </div>
+                        <ul className="list-group list-group-flush">
+                            <li className="list-group-item">{this.getRarityString()}</li>
+                        </ul>
+                        <div className="card-body card-body--id">
+                            <p className="card-text"><span className="waifuId">ID: 1</span></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         );
