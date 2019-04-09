@@ -59,8 +59,17 @@ class WaifuRequestForm extends React.Component<Props, State> {
             ({ error: 'Image Url should be an URL to an image!' }));
             return;
         }
+        // first trim the name
+        req.name = req.name.trim();
+        // set the new state to the trimmed one
+        this.setState((state)=> ({
+            request: {
+                ...state.request,
+                name: req.name
+            }
+        }))
         // now check name
-        if (this.state.request.name.length < 3) {
+        if (req.name.length < 3) {
             this.setState(() => ({
                 error: 'Name should be no less than 3 characters!'
             }));
@@ -77,7 +86,7 @@ class WaifuRequestForm extends React.Component<Props, State> {
     }
 
     onUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const imageUrl = e.target.value;
+        const imageUrl = e.target.value.trim();
         if (imageUrl.length > 300) return;
         this.setState((state)=> ({ request: {...state.request, imageUrl } }));
     }

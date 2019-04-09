@@ -13,7 +13,6 @@ interface Props {
 type RootState = {};
 
 class ReactAuthPage extends React.Component<Props> {
-    
     constructor(props: any) {
         super(props);
         props.startLogin().then((resp: AxiosResponse) => {

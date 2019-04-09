@@ -9,14 +9,14 @@ import './styles/styles.scss';
 import { login } from './actions/auth';
 
 const store = configureStore();
-
+/*
 store.dispatch(login({
   username: 'Serenity',
   avatar: 'https://cdn.discordapp.com/avatars/192750776005689344/62a44dac07566bb04f155dbf67da9522.png',
   discriminator: '0783',
   id: '192750776005689344'
 }));
-
+*/
 const jsx = (
     <Provider store={store}>
       <AppRouter />

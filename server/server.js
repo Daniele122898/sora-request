@@ -4,8 +4,10 @@ const passport = require('passport');
 const OAuth2Strategy = require('passport-oauth2');
 const axios = require('axios');
 const cookieSession = require('cookie-session');
+const bodyParser = require('body-parser');
 
 const keys = require('./keys');
+const apiRouter = require('./apiRouter');
 
 const app = express();
 const publicPath = path.join(__dirname, '..', 'public');
@@ -29,14 +31,6 @@ passport.deserializeUser((id, done) => {
     done (null, user);
   }
 });
-
-const authCheck = (req, res, next) => {
-  if(req.user) {
-    next();
-  } else {
-    res.redirect('/auth/login')
-  }
-};
 
 const example = {
   username: 'Serenity',
@@ -66,11 +60,12 @@ function(accessToken, refreshToken, profile, done) {
     }
     done(null, resp.data);
   }).catch(err => {
-    console.log(err);
     done(err, null);
   });
 }
 ));
+
+app.use(bodyParser.json());
 
 app.use(express.static(publicPath));
 app.use(cookieSession({
@@ -83,7 +78,11 @@ app.use(passport.session());
 
 app.use(function(err, req, res, next) {
   if (err) {
-    console.log(err);
+    if(req.originalUrl.includes('api')) {
+      console.log(err);
+      next(err);
+      return;
+    }
     req.logout();
     if (req.originalUrl == "/") {
       next(); // never redirect login page to itself
@@ -95,6 +94,8 @@ app.use(function(err, req, res, next) {
   }
 });
 
+app.use('/api', apiRouter);
+
 app.get('/auth/login', passport.authenticate('oauth2'));
 
 app.get('/auth/callback',
@@ -104,19 +105,6 @@ app.get('/auth/callback',
 app.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/')
-});
-
-app.get('/api/checkLogin', (req, res) => {
-  if (req.user) {
-    res.json({
-      login: true,
-      user: req.user
-    });
-  } else {
-    res.json({
-      login: false
-    });
-  }
 });
 
 app.get('*', (req, res) => {
