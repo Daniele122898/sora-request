@@ -52,7 +52,7 @@ export const startFirstFetch = (): ThunkResult<any> => {
         axios.get('/api/getAllRequests')
         .then(resp => {
             // if the user has no requests we do... nothing :)
-            if (resp.data.length === 0) {
+            if (resp.data == null || resp.data.length === 0) {
                 return;
             }
             // else create a Request[] and add all the data
@@ -69,6 +69,8 @@ export const startFirstFetch = (): ThunkResult<any> => {
             }
             // dispatch it to update the state
             dispatch(setRequests(reqs));
+            // set first fetch so we dont fetch again :)
+            dispatch(setFirstFetch(true));
         }).catch(e => {
             console.log(e);
             return;
