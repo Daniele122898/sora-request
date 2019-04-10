@@ -1,4 +1,3 @@
-import { AnyAction } from "redux";
 import { ThunkResult } from '../types'
 import axios, { AxiosPromise } from 'axios';
 import * as constants from '../constants';

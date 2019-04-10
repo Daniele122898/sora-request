@@ -3,3 +3,15 @@ export type LOGIN = typeof LOGIN;
 
 export const LOGOUT = 'LOGOUT';
 export type LOGOUT = typeof LOGOUT;
+
+export const ADD_REQUEST = 'ADD_REQUEST';
+export type ADD_REQUEST = typeof ADD_REQUEST;
+
+export const EDIT_REQUEST = 'EDIT_REQUEST';
+export type EDIT_REQUEST = typeof EDIT_REQUEST;
+
+export const REMOVE_REQUEST = 'REMOVE_REQUEST';
+export type REMOVE_REQUEST = typeof REMOVE_REQUEST;
+
+export const SET_REQUESTS = 'SET_REQUESTS';
+export type SET_REQUESTS = typeof SET_REQUESTS;
