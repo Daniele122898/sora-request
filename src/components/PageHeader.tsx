@@ -6,7 +6,7 @@ const PageHeader = ({title, subtitle}: {title: string, subtitle?: string}) => (
         <h1 className="page-header__title">{title}</h1>
         {subtitle && 
             <h3 className="page-header__subtitle">
-                You can request 3 waifus per day.
+                {subtitle}
             </h3>
         }
       </div>
