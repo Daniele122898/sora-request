@@ -28,6 +28,17 @@ router.get('/checkLogin', (req, res) => {
     }
 });
 
+router.get('/getAllRequests', authCheck, (req, res) => {
+  axios.get(`http://localhost:${soraPort}/api/SoraApi/getAllRequests/${req.user.id}`)
+    .then(r => {
+        res.json(r.data);
+    })
+    .catch(e=> {
+        console.log(e);
+        res.status(500).send('Something broke ;_;')
+    });
+});
+
 router.post('/requestWaifu', authCheck, (req, res) => {
     let request = {
         ...req.body,

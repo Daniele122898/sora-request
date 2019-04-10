@@ -1,10 +1,11 @@
 import { Reducer } from "redux";
 import { RequestState } from '../store/index';
-import { RequestAction, RemoveRequest } from '../actions/requestActions';
-import { ADD_REQUEST, EDIT_REQUEST, REMOVE_REQUEST, SET_REQUESTS } from '../constants/index';
+import { RequestAction } from '../actions/requestActions';
+import { ADD_REQUEST, EDIT_REQUEST, REMOVE_REQUEST, SET_REQUESTS, SET_FIRST_FETCH } from '../constants/index';
 
 const RequestsDefaultState: RequestState = {
-    requests: []
+    requests: [],
+    firstFetch: false
 };
 
 const reducer: Reducer<RequestState, RequestAction> = 
@@ -12,7 +13,8 @@ const reducer: Reducer<RequestState, RequestAction> =
   switch (action.type) {
     case ADD_REQUEST:
         return {
-            requests: [...state.requests, action.request]
+            requests: [...state.requests, action.request],
+            firstFetch: state.firstFetch
         }
     case EDIT_REQUEST: 
         return {
@@ -25,15 +27,23 @@ const reducer: Reducer<RequestState, RequestAction> =
                 } else {
                     return req;
                 }
-            })
+            }),
+            firstFetch: state.firstFetch
         }
     case REMOVE_REQUEST:
         return {
-            requests: state.requests.filter((req) => req.id !== action.id)
+            requests: state.requests.filter((req) => req.id !== action.id),
+            firstFetch: state.firstFetch
         }
     case SET_REQUESTS:
         return {
-            requests: action.requests
+            requests: action.requests,
+            firstFetch: state.firstFetch
+        }
+    case SET_FIRST_FETCH:
+        return {
+            requests: state.requests,
+            firstFetch: action.firstFetch
         }
     default:
       return state;

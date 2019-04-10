@@ -1,17 +1,26 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import swal from 'sweetalert2';
 import WaifuRequestForm, { WaifuRequest } from './WaifuRequestForm';
 import PageHeader from './PageHeader';
+import { AnyThunkDispatch } from '../types/index';
+import { addRequest, AddRequest } from '../actions/requestActions';
+import { Request } from '../store/index';
 
-class DashboardPage extends React.Component<{}> {
+type RootState = {};
+
+interface Props {
+  addRequest: (request: Request) => AddRequest;
+}
+
+class DashboardPage extends React.Component<Props> {
   
   onSubmit = (request: WaifuRequest) => {
     // send the request to our backend
     axios.post('/api/requestWaifu',request)
     .then(resp => {
       if (resp.status != 200) {
-
         return;
       }
       if (resp.data.success) {
@@ -20,6 +29,12 @@ class DashboardPage extends React.Component<{}> {
           "Successfully requested a waifu!",
           'success'
         );
+        // dispatch event
+        this.props.addRequest({
+          ...request,
+          id: resp.data.requestId
+        });
+        
       } else {
         swal.fire({
           type: 'error',
@@ -53,4 +68,8 @@ class DashboardPage extends React.Component<{}> {
   }
 } 
 
-export default DashboardPage;
+const mapDispatchToProps = (dispatch: AnyThunkDispatch<RootState>) => ({
+  addRequest: (request: Request) => dispatch(addRequest(request))
+});
+
+export default connect(undefined, mapDispatchToProps)(DashboardPage);

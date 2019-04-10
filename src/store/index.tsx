@@ -7,6 +7,7 @@ export interface ApplicationState {
 
 export interface RequestState {
     requests: Request[];
+    firstFetch: boolean;
 }
 
 export interface Request {
