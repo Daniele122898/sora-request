@@ -77,8 +77,18 @@ class WaifuRequestForm extends React.Component<Props, State> {
             return;
         }
 
-        this.props.onSubmit(this.state.request);
+        this.props.onSubmit(this.state.request, this.clearInput);
     };
+
+    clearInput = () => {
+        this.setState(() => ({
+            request: {
+                name: '',
+                imageUrl: '',
+                rarity: WaifuRarity.Common
+            }
+        }));
+    }
 
     onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const name = e.target.value;

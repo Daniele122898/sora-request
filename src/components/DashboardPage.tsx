@@ -16,7 +16,7 @@ interface Props {
 
 class DashboardPage extends React.Component<Props> {
   
-  onSubmit = (request: WaifuRequest) => {
+  onSubmit = (request: WaifuRequest, clearInput: Function) => {
     // send the request to our backend
     axios.post('/api/requestWaifu',request)
     .then(resp => {
@@ -34,7 +34,9 @@ class DashboardPage extends React.Component<Props> {
           ...request,
           id: resp.data.requestId
         });
-        
+        // clear input
+        clearInput();
+
       } else {
         swal.fire({
           type: 'error',
