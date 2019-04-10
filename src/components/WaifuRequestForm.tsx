@@ -113,7 +113,6 @@ class WaifuRequestForm extends React.Component<Props, State> {
                 return "Special";
             default:
                 return "Common";
-
         }
     };
 
