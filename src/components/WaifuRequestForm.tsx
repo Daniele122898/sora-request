@@ -1,4 +1,5 @@
 import React from 'react';
+import Card from './Card';
 
 interface Props {
     onSubmit: Function;
@@ -96,7 +97,7 @@ class WaifuRequestForm extends React.Component<Props, State> {
         this.setState((state)=> ({ request: {...state.request, rarity } }));
     }
 
-    getRarityString = () => {
+    getRarityString = (): string => {
         switch(this.state.request.rarity) {
             case WaifuRarity.Common: 
                 return "Common";
@@ -110,6 +111,8 @@ class WaifuRequestForm extends React.Component<Props, State> {
                 return "Ultimate Waifu";
             case WaifuRarity.Special: 
                 return "Special";
+            default:
+                return "Common";
 
         }
     };
@@ -152,23 +155,12 @@ class WaifuRequestForm extends React.Component<Props, State> {
                 </div>
                 <div className="split-between-30 center">
                     <h2 className="image-preview--title">Preview</h2>
-                    <div className="card">
-                        <div className="crop pop">
-                            <img src={this.state.request.imageUrl ? 
-                                this.state.request.imageUrl : 
-                                "https://cdn.argonaut.pw/lxvFBNdShIvb4efQvT60d99iXlN4TFXe.png"} 
-                                alt="Waifu Image"/>
-                        </div>
-                        <div className="card-body card-body--title">
-                            <h5 className="card-title">{this.state.request.name ? this.state.request.name : 'Name' }</h5>
-                        </div>
-                        <ul className="list-group list-group-flush">
-                            <li className="list-group-item">{this.getRarityString()}</li>
-                        </ul>
-                        <div className="card-body card-body--id">
-                            <p className="card-text"><span className="waifuId">ID: 1</span></p>
-                        </div>
-                    </div>
+                    <Card 
+                        imageUrl={this.state.request.imageUrl}
+                        name={this.state.request.name}
+                        rarity={this.getRarityString()}
+                        enableIdFooter={true}
+                    />
                 </div>
             </div>
         );
