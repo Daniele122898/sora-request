@@ -16,7 +16,7 @@ const AppRouter = () => (
     <div>
       <Switch>
         <PublicRoute path="/" component={LoginPage} exact={true}/>
-        <PublicRoute path="/reactAuth" component={ReactAuthPage} exact={true}/>
+        <PublicRoute path="/reactAuth/:redirPath?" component={ReactAuthPage}/>
         <PrivateRoute path="/dashboard" component={DashboardPage}/>
         <PrivateRoute path="/myRequests" component={MyRequestsPage}/>
         <Route component={NotFoundPage} />

@@ -8,6 +8,7 @@ interface Props {
     startLogin: any;
     login: any;
     history: any;
+    match: any;
 }
 
 type RootState = {};
@@ -25,8 +26,12 @@ class ReactAuthPage extends React.Component<Props> {
                 };
                 props.dispatchlogin(user); 
                 setTimeout(() => {
-                    props.history.push('/dashboard');
-                }, 500);
+                    if (this.props.match.params.redirPath) {
+                        props.history.push(atob(this.props.match.params.redirPath));
+                    } else {
+                        props.history.push('/dashboard');
+                    }
+                }, 250);
             } else {
                 props.history.push('/');
             }

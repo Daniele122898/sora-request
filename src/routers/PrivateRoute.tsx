@@ -16,7 +16,7 @@ const PrivateRoute = ({
         <Component {...props} />
       </div>
     ) : (
-      <Redirect to={"/"} />
+      <Redirect to={`/reactAuth${(window.location.pathname.length > 3 ? `/${btoa(window.location.pathname)}` : "")}`} />
     )
   )}/>
 );

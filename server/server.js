@@ -31,7 +31,7 @@ passport.deserializeUser((id, done) => {
     done (null, user);
   }
 });
-
+/*
 const example = {
   username: 'Serenity',
   locale: 'en-US',
@@ -41,7 +41,7 @@ const example = {
   discriminator: '0783',
   id: '192750776005689344'
 };
-
+*/
 passport.use(new OAuth2Strategy({
   authorizationURL: 'https://discordapp.com/api/oauth2/authorize',
   tokenURL: 'https://discordapp.com/api/oauth2/token',

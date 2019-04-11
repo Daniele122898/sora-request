@@ -33,12 +33,14 @@ class MyRequestsPage extends React.Component<Props> {
     renderCards = () => {
         return this.props.requests.map((req) => {
             return (
-                <CardEditor 
-                    imageUrl={req.imageUrl}
-                    name={req.name}
-                    rarity={getRarityStringFromInt(req.rarity)}
-                    id={req.id}
-                />
+                <div className="card--float" key={req.id}>
+                    <CardEditor 
+                        imageUrl={req.imageUrl}
+                        name={req.name}
+                        rarity={getRarityStringFromInt(req.rarity)}
+                        id={req.id}
+                    />
+                </div>
             );
         });
     }
@@ -50,7 +52,9 @@ class MyRequestsPage extends React.Component<Props> {
                   title={"Your Requests"} 
                   subtitle={"Here you can view and edit all your requests"} 
                 />
-                {this.renderCards()}
+                <div className="content-container">
+                    {this.renderCards()}
+                </div>    
             </div>
         );
     }

@@ -11,7 +11,7 @@ const PublicRoute = ({
   <Route {...rest} component={(props: any)=> (
     !isAuthenticated ? (
       <Component {...props} />
-    ) : (
+    ) : ( !window.location.pathname.includes('reactAuth') &&
       <Redirect to={"/dashboard"} />
     )
   )}/>
