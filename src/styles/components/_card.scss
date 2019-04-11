@@ -3,6 +3,10 @@
     margin-right: $l-size;
 }
 
+.card__button-float-right {
+    float: right;
+}
+
 .card .crop{
     width: 100%;
     height: 300px;
@@ -81,6 +85,10 @@
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
     padding: 1.25rem;
+}
+
+.card-body--small-padding {
+    padding: 1rem;
 }
 
 .card-body--title {

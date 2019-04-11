@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactChild } from 'react';
 
 const getRarityStringFromInt = (rarity: Number) => {
     switch(rarity) {
@@ -19,8 +19,9 @@ const getRarityStringFromInt = (rarity: Number) => {
     }
 };
 
-const Card = ({imageUrl, name, rarity, enableIdFooter = false}: 
-    { imageUrl: string, name: string, rarity: string, enableIdFooter?: boolean }) => (
+const Card = ({imageUrl, name, rarity, enableIdFooter = false, children}: 
+    { imageUrl: string, name: string, rarity: string, enableIdFooter?: boolean,
+    children?: ReactChild }) => (
     <div className="card">
         <div className="crop pop">
             <img src={imageUrl ? imageUrl : 
@@ -38,6 +39,7 @@ const Card = ({imageUrl, name, rarity, enableIdFooter = false}:
                 <p className="card-text"><span className="waifuId">ID: 1</span></p>
             </div>
         }
+        { children }
     </div>
 );
 

@@ -10,6 +10,30 @@
   line-height: 1;
 }
 
+.button--rounded {
+  border-radius: 3px;
+}
+
+.link-center-text {
+  text-align: center;
+}
+
+.button--full-width {
+  width: 100%;
+}
+
+.button--half-width {
+  width: 50%;
+}
+
+.button-green {
+  background-color: $green;
+}
+
+.button-red {
+  background-color: $red;
+}
+
 .button--link {
   background: none;
 }

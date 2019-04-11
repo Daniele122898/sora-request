@@ -21,6 +21,11 @@ class DashboardPage extends React.Component<Props> {
     axios.post('/api/requestWaifu',request)
     .then(resp => {
       if (resp.status != 200) {
+        swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: 'Something broke...'
+        });
         return;
       }
       if (resp.data.success) {

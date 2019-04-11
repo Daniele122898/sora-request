@@ -47,6 +47,11 @@ export const setRequests = (requests: Request[]): SetRequests => ({
     requests
 });
 
+export const editRequest = (request: Request): EditRequest => ({
+    type: EDIT_REQUEST,
+    request
+})
+
 export const startFirstFetch = (): ThunkResult<any> => {
     return (dispatch) => {
         axios.get('/api/getAllRequests')

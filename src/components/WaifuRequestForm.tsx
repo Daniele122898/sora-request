@@ -1,9 +1,10 @@
 import React from 'react';
 import Card from './Card';
+import { Request } from '../store/index';
 
 interface Props {
     onSubmit: Function;
-    request?: WaifuRequest;
+    request?: Request;
 }
 
 interface State {

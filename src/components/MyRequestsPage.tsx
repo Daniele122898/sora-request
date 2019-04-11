@@ -7,7 +7,7 @@ import { startFirstFetch } from '../actions/requestActions';
 import { AnyAction } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import CardEditor from './CardEditor';
-import {getRarityStringFromInt} from './Card';
+import { getRarityStringFromInt } from './Card';
 
 interface Props {
     requests: Request[];

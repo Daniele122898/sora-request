@@ -3,10 +3,12 @@ import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { startLogout } from "../actions/auth";
 import { AnyThunkDispatch } from '../types'
+import { ApplicationState } from '../store/index';
+import { isAdmin } from '../utils/utils';
 
 type RootState = {};
 
-export const Header = ({ startLogout }: any) => (
+export const Header = ({ startLogout, isAdmin }: any) => (
   <header className="header">
     <div className="content-container">
       <div className="header__content">
@@ -14,6 +16,14 @@ export const Header = ({ startLogout }: any) => (
           <h1>Sora Requests</h1>
         </Link>
         <div>
+          { isAdmin &&
+            <NavLink
+              to='/adminPanel'
+              className="button button--link" 
+            >
+              Admin
+            </NavLink>
+          }
           <NavLink 
             to="/myRequests"
             className="button button--link" 
@@ -32,8 +42,12 @@ export const Header = ({ startLogout }: any) => (
   </header>
 );
 
+const mapStateToProps = (state: ApplicationState) => ({
+  isAdmin: isAdmin(state.auth.user ? state.auth.user.id : '')
+});
+
 const mapDispatchToProps = (dispatch: AnyThunkDispatch<RootState>) => ({
   startLogout: () => dispatch(startLogout())
 });
 
-export default connect(undefined, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
