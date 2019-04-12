@@ -3,12 +3,14 @@ import { connect } from 'react-redux'
 import swal from 'sweetalert2';
 import axios from 'axios';
 import { IoMdCheckmark, IoMdClose } from 'react-icons/io'
-import { Request } from '../store';
+import { Request, ApplicationState } from '../store';
 import CardEditor from './CardEditor';
 import { getRarityStringFromInt } from './Card';
 import PageHeader from './PageHeader';
 import { AnyThunkDispatch } from '../types';
 import { setRequests, SetRequests } from '../actions/requestActions';
+import { isAdmin } from '../utils/utils';
+import { History } from 'history';
 
 type State = {
     requests: Request[]
@@ -16,6 +18,8 @@ type State = {
 
 type Props = {
     setRequests: (requests: Request[]) => SetRequests;
+    isAdmin: boolean;
+    history: History;
 }
 
 type RootState = {};
@@ -31,6 +35,11 @@ class AdminPanel extends React.Component<Props, State> {
     }
 
     componentDidMount = () => {
+        // check if we're admin
+        if (!this.props.isAdmin) {
+            this.props.history.push('/dashboard');
+        }
+
         // get all requests
         axios.get('/api/getAdminRequests')
         .then(resp => {
@@ -156,6 +165,10 @@ class AdminPanel extends React.Component<Props, State> {
 
 const mapDispatchToProps = (dispatch: AnyThunkDispatch<RootState>) => ({
     setRequests: (requests: Request[]) => dispatch(setRequests(requests))
-  });
+});
 
-export default connect(undefined, mapDispatchToProps)(AdminPanel);
+const mapStateToProps = (state: ApplicationState) => ({
+    isAdmin: isAdmin(state.auth.user ? state.auth.user.id : '')
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminPanel);

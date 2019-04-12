@@ -79,7 +79,6 @@ app.use(passport.session());
 app.use(function(err, req, res, next) {
   if (err) {
     if(req.originalUrl.includes('api')) {
-      console.log(err);
       next(err);
       return;
     }
