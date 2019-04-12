@@ -10,3 +10,6 @@ deploy:
   on:
     branch: master
   script: "./deploy.sh"
+before_install:
+- openssl aes-256-cbc -K $encrypted_16292a871be3_key -iv $encrypted_16292a871be3_iv
+  -in travis.key.enc -out travis.key -d
