@@ -1,0 +1,36 @@
+.burger {
+    color: white;
+    height: 30px ;
+    width: 30px ;
+}
+
+.cross {
+    color: black;
+    height: 30px !important;
+    width: 30px !important;
+    right: 19px !important;
+    top: -5px !important;
+}
+
+.burger-menu {
+    background: rgba($color: #fff, $alpha: 0.95);
+    /*
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+    */
+    margin-top: -23px;
+    padding: $l-size $s-size;
+}
+
+.burger-button {
+    color: $dark-grey;
+    border-top: 1px solid darken($off-white, $amount: 15);
+}
+
+.burger-button:first-child {
+    margin-top: $l-size;
+}
+
+.burger-button:last-child {
+    border-bottom: 1px solid darken($off-white, $amount: 15);
+}
