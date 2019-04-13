@@ -71,9 +71,9 @@ class WaifuRequestForm extends React.Component<Props, State> {
             }
         }))
         // now check name
-        if (req.name.length < 3) {
+        if (req.name.length < 2) {
             this.setState(() => ({
-                error: 'Name should be no less than 3 characters!'
+                error: 'Name should be no less than 2 characters!'
             }));
             return;
         }
