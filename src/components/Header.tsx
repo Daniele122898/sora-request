@@ -19,19 +19,19 @@ export const Header = ({ startLogout, isAdmin }: any) => (
           { isAdmin &&
             <NavLink
               to='/adminPanel'
-              className="button button--link" 
+              className="button button--link header--button" 
             >
               Admin
             </NavLink>
           }
           <NavLink 
             to="/myRequests"
-            className="button button--link" 
+            className="button button--link header--button" 
           >
             My Requests
           </NavLink>
           <button 
-            className="button button--link" 
+            className="button button--link header--button" 
             onClick={()=> { startLogout(history); }}
           >
             Logout

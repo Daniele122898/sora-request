@@ -19,3 +19,9 @@
     font-weight: normal;
   }
 }
+
+.header--button {
+  @media (max-width: $desktop-breakpoint - 0.01rem) {
+    float: right;
+  }    
+}
