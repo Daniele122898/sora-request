@@ -42,12 +42,17 @@ const example = {
   id: '192750776005689344'
 };
 */
+
+const callbackUrl = process.env.NODE_ENV === 'production' ? 
+  'https://request.sorabot.pw/auth/callback' :
+  'http://localhost:3000/auth/callback';
+
 passport.use(new OAuth2Strategy({
   authorizationURL: 'https://discordapp.com/api/oauth2/authorize',
   tokenURL: 'https://discordapp.com/api/oauth2/token',
   clientID: keys.oauth.clientID,
   clientSecret: keys.oauth.clientSecret,
-  callbackURL: "http://localhost:3000/auth/callback",
+  callbackURL: callbackUrl,
   scope: "identify"
 },
 function(accessToken, refreshToken, profile, done) {
