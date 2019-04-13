@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const axios = require('axios');
 
-const soraPort = 8187;
+const soraPort = 8087;
 
 const authCheck = (req, res, next) => {
     if(req.user) {
