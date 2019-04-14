@@ -52,7 +52,7 @@ export const Header = ({ startLogout, isAdmin }: any) => (
               pageWrapId={'app'}
               outerContainerId={'outer-container'}
               right 
-              width={'50%'}
+              width={'45%'}
               customBurgerIcon={<IoMdMenu/>}
               customCrossIcon={<IoMdClose/>}
               crossButtonClassName={'cross'}

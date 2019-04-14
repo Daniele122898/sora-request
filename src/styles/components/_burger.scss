@@ -32,7 +32,7 @@
 }
 
 .burger-menu {
-    background: rgba($color: #fff, $alpha: 0.95);
+    background: rgba($color: #fff, $alpha: 1 );
     /*
     filter: blur(8px);
     -webkit-filter: blur(8px);
@@ -44,6 +44,7 @@
 .burger-button {
     color: $dark-grey;
     border-top: 1px solid darken($off-white, $amount: 15);
+    padding: $m-size $s-size;
 }
 
 .burger-button__button {
