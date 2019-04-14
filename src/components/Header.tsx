@@ -1,12 +1,20 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { IoMdMenu, IoMdClose } from 'react-icons/io';
+import { slide as Menu } from 'react-burger-menu';
 import { startLogout } from "../actions/auth";
 import { AnyThunkDispatch } from '../types'
 import { ApplicationState } from '../store/index';
 import { isAdmin } from '../utils/utils';
 
 type RootState = {};
+
+/*
+
+
+
+*/
 
 export const Header = ({ startLogout, isAdmin }: any) => (
   <header className="header">
@@ -15,27 +23,68 @@ export const Header = ({ startLogout, isAdmin }: any) => (
         <Link className="header__title" to="/dashboard">
           <h1>Sora Requests</h1>
         </Link>
-        <div>
-          { isAdmin &&
-            <NavLink
-              to='/adminPanel'
-              className="button button--link" 
+        <div id={"outer-container"}>
+          <div className='show-on-desktop'>
+            { isAdmin &&
+                <NavLink
+                  to='/adminPanel'
+                  className="button button--link header--button" 
+                >
+                  Admin
+                </NavLink>
+              }
+              <NavLink 
+                to="/myRequests"
+                className="button button--link header--button" 
+              >
+                My Requests
+              </NavLink>
+              <button 
+                className="button button--link header--button" 
+                onClick={()=> { startLogout(history); }}
+              >
+                Logout
+              </button>
+            </div>
+          <div className='show-on-mobile'>
+            <Menu
+              disableAutoFocus={'true'}
+              pageWrapId={'app'}
+              outerContainerId={'outer-container'}
+              right 
+              width={'45%'}
+              customBurgerIcon={<IoMdMenu/>}
+              customCrossIcon={<IoMdClose/>}
+              crossButtonClassName={'cross'}
+              burgerButtonClassName={'burger'}
+              bodyClassName={'BODY'}
+              htmlClassName={'HTML'}
+              overlayClassName={'OVERLAY'}
+              menuClassName={'burger-menu'}
             >
-              Admin
-            </NavLink>
-          }
-          <NavLink 
-            to="/myRequests"
-            className="button button--link" 
-          >
-            My Requests
-          </NavLink>
-          <button 
-            className="button button--link" 
-            onClick={()=> { startLogout(history); }}
-          >
-            Logout
-          </button>
+              { isAdmin &&
+                <NavLink
+                  to='/adminPanel'
+                  className="button button--link burger-button" 
+                >
+                  Admin
+                </NavLink>
+              }
+              <NavLink 
+                to="/myRequests"
+                className="button button--link burger-button" 
+              >
+                My Requests
+              </NavLink>
+              <button 
+                className="button button--link burger-button burger-button__button" 
+                onClick={()=> { startLogout(history); }}
+              >
+                Logout
+              </button>
+            </Menu>
+          </div>
+
         </div>
       </div>
     </div>

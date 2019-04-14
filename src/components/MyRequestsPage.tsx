@@ -50,7 +50,7 @@ class MyRequestsPage extends React.Component<Props> {
             <div>
                 <PageHeader 
                   title={"Your Requests"} 
-                  subtitle={"Here you can view and edit all your requests"} 
+                  subtitle={"View and edit all your requests"} 
                 />
                 <div className="content-container">
                     {this.renderCards()}

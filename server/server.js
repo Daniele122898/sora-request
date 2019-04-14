@@ -45,7 +45,7 @@ const example = {
 
 const callbackUrl = process.env.NODE_ENV === 'production' ? 
   'https://request.sorabot.pw/auth/callback' :
-  'http://localhost:3000/auth/callback';
+  `http://localhost:${port}/auth/callback`;
 
 passport.use(new OAuth2Strategy({
   authorizationURL: 'https://discordapp.com/api/oauth2/authorize',
