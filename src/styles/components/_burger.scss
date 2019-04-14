@@ -1,3 +1,16 @@
+
+.show-on-desktop {
+    @media (max-width: $desktop-breakpoint - 0.01rem) {
+        display: none !important;
+    }
+}
+
+.show-on-mobile {
+    @media (min-width: $desktop-breakpoint) {
+        display: none !important;
+    }
+}
+
 .burger {
     color: white;
     height: 30px ;
@@ -31,6 +44,11 @@
 .burger-button {
     color: $dark-grey;
     border-top: 1px solid darken($off-white, $amount: 15);
+}
+
+.burger-button__button {
+    width: 100%;
+    text-align: left;
 }
 
 .burger-button:first-child {

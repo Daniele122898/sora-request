@@ -12,26 +12,7 @@ type RootState = {};
 
 /*
 
-{ isAdmin &&
-            <NavLink
-              to='/adminPanel'
-              className="button button--link header--button" 
-            >
-              Admin
-            </NavLink>
-          }
-          <NavLink 
-            to="/myRequests"
-            className="button button--link header--button" 
-          >
-            My Requests
-          </NavLink>
-          <button 
-            className="button button--link header--button" 
-            onClick={()=> { startLogout(history); }}
-          >
-            Logout
-          </button>
+
 
 */
 
@@ -43,35 +24,66 @@ export const Header = ({ startLogout, isAdmin }: any) => (
           <h1>Sora Requests</h1>
         </Link>
         <div id={"outer-container"}>
-          
-          
-
-          <Menu
-            disableAutoFocus={'true'}
-            pageWrapId={'app'}
-            outerContainerId={'outer-container'}
-            right 
-            width={'50%'}
-            customBurgerIcon={<IoMdMenu/>}
-            customCrossIcon={<IoMdClose/>}
-            crossButtonClassName={'cross'}
-            burgerButtonClassName={'burger'}
-            bodyClassName={'BODY'}
-            htmlClassName={'HTML'}
-            overlayClassName={'OVERLAY'}
-            menuClassName={'burger-menu'}
-          >
-            <a href="" 
-              className="button button--link burger-button"
+          <div className='show-on-desktop'>
+            { isAdmin &&
+                <NavLink
+                  to='/adminPanel'
+                  className="button button--link header--button" 
+                >
+                  Admin
+                </NavLink>
+              }
+              <NavLink 
+                to="/myRequests"
+                className="button button--link header--button" 
+              >
+                My Requests
+              </NavLink>
+              <button 
+                className="button button--link header--button" 
+                onClick={()=> { startLogout(history); }}
+              >
+                Logout
+              </button>
+            </div>
+          <div className='show-on-mobile'>
+            <Menu
+              disableAutoFocus={'true'}
+              pageWrapId={'app'}
+              outerContainerId={'outer-container'}
+              right 
+              width={'50%'}
+              customBurgerIcon={<IoMdMenu/>}
+              customCrossIcon={<IoMdClose/>}
+              crossButtonClassName={'cross'}
+              burgerButtonClassName={'burger'}
+              bodyClassName={'BODY'}
+              htmlClassName={'HTML'}
+              overlayClassName={'OVERLAY'}
+              menuClassName={'burger-menu'}
             >
-              My Requests
-            </a>
-            <a href="" 
-              className="button button--link burger-button"
-            >
-              Logout
-            </a>
-          </Menu>
+              { isAdmin &&
+                <NavLink
+                  to='/adminPanel'
+                  className="button button--link burger-button" 
+                >
+                  Admin
+                </NavLink>
+              }
+              <NavLink 
+                to="/myRequests"
+                className="button button--link burger-button" 
+              >
+                My Requests
+              </NavLink>
+              <button 
+                className="button button--link burger-button burger-button__button" 
+                onClick={()=> { startLogout(history); }}
+              >
+                Logout
+              </button>
+            </Menu>
+          </div>
 
         </div>
       </div>
