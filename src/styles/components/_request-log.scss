@@ -1,0 +1,65 @@
+.log-header {
+    width: 100%;
+    color: white;
+    background-color: $sora;
+    padding: 0 $s-size;
+}
+
+.log-body {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    -webkit-box-shadow: 3px 3px 10px 0px rgba(50, 50, 50, 0.4);
+    -moz-box-shadow:    3px 3px 10px 0px rgba(50, 50, 50, 0.4);
+    box-shadow:         3px 3px 10px 0px rgba(50, 50, 50, 0.4);
+}
+
+.logs-container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    height: 150px;
+    overflow-y: scroll;
+}
+
+.log-entry {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-content: center;
+    padding: 0 $s-size;
+    border-bottom: 1px solid darken($color: $off-white, $amount: 10%);
+    
+
+    @media (min-width: $desktop-breakpoint) {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    @media (max-width: $desktop-breakpoint - 0.01rem) {
+        padding-bottom: $s-size;
+        margin-top: $s-size;
+    }  
+
+    p {
+        @media (max-width: $desktop-breakpoint - 0.01rem) {
+            margin-top: 0;
+            margin-bottom: $s-size / 2;
+        }
+    }
+
+    .log__waifu-name {
+        flex: 2 1 0;
+    }
+
+    .log__rest {
+        flex: 1 1 0;
+        display: flex;
+        span {
+            color: $grey;
+            display: flex;
+            align-items: center;
+        }
+    }
+    
+}
