@@ -12,6 +12,7 @@
     -webkit-box-shadow: 3px 3px 10px 0px rgba(50, 50, 50, 0.4);
     -moz-box-shadow:    3px 3px 10px 0px rgba(50, 50, 50, 0.4);
     box-shadow:         3px 3px 10px 0px rgba(50, 50, 50, 0.4);
+    margin-bottom: $m-size;
 }
 
 .logs-container {
@@ -20,6 +21,11 @@
     flex-direction: column;
     height: 150px;
     overflow-y: scroll;
+
+    @media (min-width: $desktop-breakpoint) {
+        height: 250px;
+    }
+
 }
 
 .log-entry {
