@@ -72,8 +72,8 @@ export const startFirstFetch = (): ThunkResult<any> => {
             }
             // else create a Request[] and add all the data
             // basically convert it to the react type.
+            const reqs: Request[] = [];
             if (resp.data.waifuRequests != undefined) {
-                const reqs: Request[] = [];
                 for (let i=0; i<resp.data.waifuRequests.length; i++) {
                     const r = resp.data.waifuRequests[i];
                     reqs.push({
@@ -85,8 +85,8 @@ export const startFirstFetch = (): ThunkResult<any> => {
                 }
             }
             // now do the same thing for the logs if they exist
+            const logs: Log[] = [];
             if (resp.data.requestLogs != undefined) {
-                const logs: Log[] = [];
                 for (let i = 0; i<resp.data.requestLogs.length; i++) {
                     const l = resp.data.requestLogs[i];
                     logs.push({
