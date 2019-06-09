@@ -7,6 +7,7 @@ export interface ApplicationState {
 
 export interface RequestState {
     requests: Request[];
+    logs: Log[];
     firstFetch: boolean;
 }
 
@@ -15,6 +16,13 @@ export interface Request {
     imageUrl: string;
     rarity: number;
     id: string;
+}
+
+export interface Log {
+    id: number;
+    accepted: boolean;
+    waifuName: string;
+    processedTime: Date;
 }
 
 export interface AuthState {

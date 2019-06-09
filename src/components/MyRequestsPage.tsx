@@ -1,17 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import JavascriptTimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en';
 import PageHeader from './PageHeader';
-import { ApplicationState, Request } from '../store/index';
+import { ApplicationState, Request, Log } from '../store/index';
 import { AnyThunkDispatch } from '../types/index';
 import { startFirstFetch } from '../actions/requestActions';
 import { AnyAction } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import CardEditor from './CardEditor';
 import { getRarityStringFromInt } from './Card';
+import RequestLogs from './RequestLogs';
+
+JavascriptTimeAgo.locale(en);
 
 interface Props {
     requests: Request[];
     firstFetch: boolean;
+    logs: Log[];
     startFirstFetch: () => ThunkAction<any, ApplicationState, undefined, AnyAction>;
 }
 
@@ -44,7 +50,7 @@ class MyRequestsPage extends React.Component<Props> {
             );
         });
     }
-    
+
     render () {
         return (
             <div>
@@ -54,6 +60,7 @@ class MyRequestsPage extends React.Component<Props> {
                 />
                 <div className="content-container">
                     {this.renderCards()}
+                    <RequestLogs logs={this.props.logs} />
                 </div>    
             </div>
         );
@@ -62,7 +69,8 @@ class MyRequestsPage extends React.Component<Props> {
 
 const mapStateToProps = (state: ApplicationState) => ({
     requests: state.requests.requests,
-    firstFetch: state.requests.firstFetch
+    firstFetch: state.requests.firstFetch,
+    logs: state.requests.logs
 });
 
 const mapDispatchToProps = (dispatch: AnyThunkDispatch<RootState>) => ({

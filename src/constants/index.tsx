@@ -16,5 +16,8 @@ export type REMOVE_REQUEST = typeof REMOVE_REQUEST;
 export const SET_REQUESTS = 'SET_REQUESTS';
 export type SET_REQUESTS = typeof SET_REQUESTS;
 
+export const SET_LOGS = 'SET_LOGS';
+export type SET_LOGS = typeof SET_LOGS;
+
 export const SET_FIRST_FETCH = 'SET_FIRST_FETCH';
 export type SET_FIRST_FETCH = typeof SET_FIRST_FETCH;
