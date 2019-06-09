@@ -72,26 +72,30 @@ export const startFirstFetch = (): ThunkResult<any> => {
             }
             // else create a Request[] and add all the data
             // basically convert it to the react type.
-            const reqs: Request[] = [];
-            for (let i=0; i<resp.data.waifuRequests.length; i++) {
-                const r = resp.data.waifuRequests[i];
-                reqs.push({
-                    id: r.id,
-                    imageUrl: r.imageUrl,
-                    name: r.name,
-                    rarity: r.rarity
-                });
+            if (resp.data.waifuRequests != undefined) {
+                const reqs: Request[] = [];
+                for (let i=0; i<resp.data.waifuRequests.length; i++) {
+                    const r = resp.data.waifuRequests[i];
+                    reqs.push({
+                        id: r.id,
+                        imageUrl: r.imageUrl,
+                        name: r.name,
+                        rarity: r.rarity
+                    });
+                }
             }
             // now do the same thing for the logs if they exist
-            const logs: Log[] = [];
-            for (let i = 0; i<resp.data.requestLogs.length; i++) {
-                const l = resp.data.requestLogs[i];
-                logs.push({
-                    id: l.id,
-                    accepted: l.accepted,
-                    waifuName: l.waifuName,
-                    processedTime: new Date(l.processedTime+"Z")
-                });
+            if (resp.data.requestLogs != undefined) {
+                const logs: Log[] = [];
+                for (let i = 0; i<resp.data.requestLogs.length; i++) {
+                    const l = resp.data.requestLogs[i];
+                    logs.push({
+                        id: l.id,
+                        accepted: l.accepted,
+                        waifuName: l.waifuName,
+                        processedTime: new Date(l.processedTime+"Z")
+                    });
+                }
             }
             // dispatch it to update the state
             dispatch(setRequests(reqs));
