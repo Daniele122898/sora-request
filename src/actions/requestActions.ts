@@ -90,7 +90,7 @@ export const startFirstFetch = (): ThunkResult<any> => {
                     id: l.id,
                     accepted: l.accepted,
                     waifuName: l.waifuName,
-                    processedTime: new Date(l.processedTime)
+                    processedTime: new Date(l.processedTime+"Z")
                 });
             }
             // dispatch it to update the state
