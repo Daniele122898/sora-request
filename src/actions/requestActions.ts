@@ -97,6 +97,10 @@ export const startFirstFetch = (): ThunkResult<any> => {
                     });
                 }
             }
+            // now sort the logs by time
+            logs.sort((a,b) => {
+                return a.processedTime < b.processedTime ? 1 : -1;
+            });
             // dispatch it to update the state
             dispatch(setRequests(reqs));
             dispatch(setLogs(logs));
