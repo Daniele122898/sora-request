@@ -1,5 +1,6 @@
 .card--float {
-    float: left;
+    display: inline-block;
+    vertical-align: top;
     margin-right: $l-size;
     
     @media (max-width: $desktop-breakpoint - 0.01rem) {
