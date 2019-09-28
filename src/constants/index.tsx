@@ -21,3 +21,6 @@ export type SET_LOGS = typeof SET_LOGS;
 
 export const SET_FIRST_FETCH = 'SET_FIRST_FETCH';
 export type SET_FIRST_FETCH = typeof SET_FIRST_FETCH;
+
+export const SET_NOTIFY = 'SET_NOTIFY';
+export type SET_NOTIFY = typeof SET_NOTIFY;

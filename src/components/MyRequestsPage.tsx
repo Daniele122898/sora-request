@@ -11,6 +11,7 @@ import { ThunkAction } from 'redux-thunk';
 import CardEditor from './CardEditor';
 import { getRarityStringFromInt } from './Card';
 import RequestLogs from './RequestLogs';
+import NotifyOnRequest from './NotifyOnRequest';
 
 JavascriptTimeAgo.locale(en);
 
@@ -59,6 +60,7 @@ class MyRequestsPage extends React.Component<Props> {
                   subtitle={"View and edit all your requests"} 
                 />
                 <div className="content-container">
+                    <NotifyOnRequest />
                     {this.renderCards()}
                     <RequestLogs logs={this.props.logs} />
                 </div>    
