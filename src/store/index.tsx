@@ -9,6 +9,7 @@ export interface RequestState {
     requests: Request[];
     logs: Log[];
     firstFetch: boolean;
+    notifyOnWaifuRequest: boolean;
 }
 
 export interface Request {

@@ -99,4 +99,21 @@ router.post('/requestWaifu', authCheck, (req, res) => {
     });
 });
 
+router.post('/setNotify', authCheck, (req, res) => {
+  let request = {
+    ...req.body,
+    userId: req.user.id
+  };
+
+  axios.post(`http://localhost:${soraPort}/api/Waifu/setRequestNotify`, request)
+  .then(r=> {
+    res.json(r.data);
+  })
+  .catch(e=> {
+    console.log(e);
+    res.status(500).send('Something broke');
+  });
+
+});
+
 module.exports = router;

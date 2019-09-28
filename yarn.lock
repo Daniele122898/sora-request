@@ -8971,10 +8971,10 @@ react-app-polyfill@^0.2.1:
     raf "3.4.1"
     whatwg-fetch "3.0.0"
 
-react-burger-menu@2.6.8:
-  version "2.6.8"
-  resolved "https://registry.yarnpkg.com/react-burger-menu/-/react-burger-menu-2.6.8.tgz#a7a41374ea745894ed60a6c1156267b899039d0e"
-  integrity sha512-M2H3LqSgh5qhMDaGTpLjgOgs3znfqnYKdDmY5o+pmhlP9sfzadoEhfzOX2165H+yeJZI40r/ejBI9DCDitjkaA==
+react-burger-menu@2.6.11:
+  version "2.6.11"
+  resolved "https://registry.yarnpkg.com/react-burger-menu/-/react-burger-menu-2.6.11.tgz#e9ec8db2ea156ef9366423be971ae6859ea17570"
+  integrity sha512-Nz0CpcQBE4kgxI/xWviyHGQM8PS4GYlsxd8oUGuOabEweYzVJeFhGbHQlM2a/1SMeWM90S80vEvpI22/wFFifA==
   dependencies:
     browserify-optional "^1.0.0"
     classnames "^2.2.6"
