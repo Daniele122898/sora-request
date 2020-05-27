@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const axios = require('axios');
 
-const soraPort = process.env.NODE_ENV === 'production' ? 8087 : 8187;
+const soraPort = process.env.NODE_ENV === 'production' ? 8000 : 8100;
 
 const authCheck = (req, res, next) => {
     if(req.user) {
@@ -45,7 +45,7 @@ router.post('/requestApproval', authCheck, (req, res) => {
 });
 
 router.get('/getAllRequests', authCheck, (req, res) => {
-  axios.get(`http://localhost:${soraPort}/api/Waifu/getAllRequests/${req.user.id}`)
+  axios.get(`http://localhost:${soraPort}/api/requests/user/${req.user.id}`)
     .then(r => {
         res.json(r.data);
     })
@@ -57,7 +57,7 @@ router.get('/getAllRequests', authCheck, (req, res) => {
 
 router.get('/getAdminRequests', authCheck, (req, res) => {
 
-  axios.get(`http://localhost:${soraPort}/api/Waifu/getAdminRequests/${req.user.id}`)
+  axios.get(`http://localhost:${soraPort}/api/requests`)
     .then(r => {
         res.json(r.data);
     })
@@ -73,7 +73,7 @@ router.post('/editWaifu', authCheck, (req, res) => {
     userId: req.user.id
   };
 
-  axios.post(`http://localhost:${soraPort}/api/Waifu/editWaifu`, request)
+  axios.post(`http://localhost:${soraPort}/api/requests/${requestId}`, request)
     .then(r => {
         res.json(r.data);
     })
@@ -89,7 +89,7 @@ router.post('/requestWaifu', authCheck, (req, res) => {
         userId: req.user.id
     };
 
-    axios.post(`http://localhost:${soraPort}/api/Waifu/waifuRequest`, request)
+    axios.post(`http://localhost:${soraPort}/api​/requests​/user​/${req.user.id}`, request)
     .then(r => {
         res.json(r.data);
     })
@@ -105,7 +105,7 @@ router.post('/setNotify', authCheck, (req, res) => {
     userId: req.user.id
   };
 
-  axios.post(`http://localhost:${soraPort}/api/Waifu/setRequestNotify`, request)
+  axios.post(`http://localhost:${soraPort}/api/requests/user/${req.user.id}/notify`, request)
   .then(r=> {
     res.json(r.data);
   })
