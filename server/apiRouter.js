@@ -87,6 +87,10 @@ router.get('/getAllRequests', authCheck, (req, res) => {
 });
 
 router.get('/getAdminRequests', authCheck, (req, res) => {
+    const userId = req.user.id
+    if (userId != ownerId) {
+        res.status(401).send("Only Sora admin can access all requests!")
+    }
 
     axios.get(`http://localhost:${soraPort}/api/requests`)
         .then(r => {

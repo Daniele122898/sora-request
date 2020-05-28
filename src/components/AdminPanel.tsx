@@ -68,41 +68,43 @@ class AdminPanel extends React.Component<Props, State> {
         });
     }
 
-    makeApprovalRequest = (id: string ,accept: boolean) => {
-        const req = {
-            waifuId: id,
-            accept
+    makeApprovalRequest = (requestId: string ,accept: boolean) => {
+        let p;
+        if (accept) {
+            p = axios.patch(`/api/request/${requestId}/approve`);
+        } else {
+            p = axios.patch(`/api/request/${requestId}/reject`);
         }
-        axios.post('/api/requestApproval', req)
-        .then(resp => {
+
+        p.then(resp => {
             if (resp.status != 200) {
+                let text = 'Something broke...';
+                if (resp.data != undefined) {
+                    text = resp.data;
+                }
+
                 swal.fire({
                   type: 'error',
                   title: 'Oops...',
-                  text: 'Something broke...'
+                  text
                 });
                 return;
             }
-            if (resp.data.success) {
-                swal.fire(
-                    'Success',
-                    `Successfully ${accept ? 'accepted' : 'declined'} request!`,
-                    'success'
-                  );
-                  // update state
-                  this.setState((state) => ({
-                      requests: state.requests.filter((req) => req.id !== id)
-                  }), () => {
-                      this.props.setRequests(this.state.requests);
-                  })
-            } else {
-                swal.fire({
-                    type: 'error',
-                    title: 'Oops...',
-                    text: resp.data.error ? resp.data.error : 'Something broke...'
-                });
-            }
+
+            swal.fire(
+                'Success',
+                `Successfully ${accept ? 'accepted' : 'declined'} request!`,
+                'success'
+            );
+            // update state
+            this.setState((state) => ({
+                requests: state.requests.filter((req) => req.id !== requestId)
+            }), () => {
+                this.props.setRequests(this.state.requests);
+            })
+
         }).catch(e=> {
+            console.error(e);
             swal.fire({
                 type: 'error',
                 title: 'Oops...',
