@@ -95,16 +95,17 @@ export const startFirstFetch = (): ThunkResult<any> => {
             // else create a Request[] and add all the data
             // basically convert it to the react type.
             const reqs: Request[] = [];
-            if (resp.data.waifuRequests != undefined) {
-                for (let i=0; i<resp.data.waifuRequests.length; i++) {
-                    const r = resp.data.waifuRequests[i];
-                    reqs.push({
-                        id: r.id,
-                        imageUrl: r.imageUrl,
-                        name: r.name,
-                        rarity: r.rarity
-                    });
-                }
+            resp.data.forEach((r: Request) => {
+
+            });
+            for (let i=0; i<resp.data.length; i++) {
+                const r = resp.data[i];
+                reqs.push({
+                    id: r.id,
+                    imageUrl: r.imageUrl,
+                    name: r.name,
+                    rarity: r.rarity
+                });
             }
             // now do the same thing for the logs if they exist
             const logs: Log[] = [];

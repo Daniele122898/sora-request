@@ -17,6 +17,7 @@ export interface Request {
     imageUrl: string;
     rarity: number;
     id: string;
+    requestState?: number;
 }
 
 export interface Log {
