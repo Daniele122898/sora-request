@@ -119,14 +119,24 @@ export const startFirstFetch = (): ThunkResult<any> => {
             });
 
             // get the NotifyOnWaifuRequest bool
-            const notifyOnWaifuRequest: boolean = resp.data.notifyOnWaifuRequest; 
-
-            // dispatch it to update the state
-            dispatch(setRequests(reqs));
-            dispatch(setLogs(logs));
-            dispatch(setNotify(notifyOnWaifuRequest));
-            // set first fetch so we dont fetch again :)
-            dispatch(setFirstFetch(true));
+            axios.get('/api/getNotify')
+                .then(resp => {
+                    // dispatch it to update the state
+                    dispatch(setRequests(reqs));
+                    dispatch(setLogs(logs));
+                    dispatch(setNotify(resp.data));
+                    // set first fetch so we dont fetch again :)
+                    dispatch(setFirstFetch(true));
+                })
+                .catch(e => {
+                    console.error(e);
+                    // dispatch it to update the state
+                    dispatch(setRequests(reqs));
+                    dispatch(setLogs(logs));
+                    dispatch(setNotify(false));
+                    // set first fetch so we dont fetch again :)
+                    dispatch(setFirstFetch(true));
+                });
         }).catch(e => {
             console.log(e);
             return;
