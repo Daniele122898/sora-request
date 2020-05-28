@@ -134,6 +134,17 @@ router.post('/requestWaifu', authCheck, (req, res) => {
         });
 });
 
+router.get('/getNotify', authCheck, (req, res) => {
+    axios.get(`http://localhost:${soraPort}/api/requests/user/${req.user.id}/notify`)
+        .then(r => {
+            res.json(r.data);
+        })
+        .catch(e => {
+            console.error(e);
+            handleError(res, e);
+        });
+});
+
 router.post('/setNotify', authCheck, (req, res) => {
     let request = {
         ...req.body,
