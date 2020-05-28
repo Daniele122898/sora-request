@@ -1,6 +1,8 @@
 import axios from 'axios';
-import { ADD_REQUEST, EDIT_REQUEST, REMOVE_REQUEST, 
-    SET_REQUESTS, SET_FIRST_FETCH, SET_LOGS, SET_NOTIFY } from '../constants/index';
+import {
+    ADD_REQUEST, EDIT_REQUEST, REMOVE_REQUEST,
+    SET_REQUESTS, SET_FIRST_FETCH, SET_LOGS, SET_NOTIFY, RequestState
+} from '../constants/index';
 import { Request, Log } from '../store/index';
 import { ThunkResult } from '../types/index';
 
@@ -94,32 +96,23 @@ export const startFirstFetch = (): ThunkResult<any> => {
             }
             // else create a Request[] and add all the data
             // basically convert it to the react type.
-            const reqs: Request[] = [];
-            resp.data.forEach((r: Request) => {
-
-            });
-            for (let i=0; i<resp.data.length; i++) {
-                const r = resp.data[i];
-                reqs.push({
+            const reqs: Request[] = resp.data.filter((r: Request) => r.requestState == RequestState.Pending)
+                .map((r: Request) => ({
                     id: r.id,
                     imageUrl: r.imageUrl,
                     name: r.name,
-                    rarity: r.rarity
-                });
-            }
+                    rarity: r.rarity,
+                    requestState: r.requestState,
+                }))
             // now do the same thing for the logs if they exist
-            const logs: Log[] = [];
-            if (resp.data.requestLogs != undefined) {
-                for (let i = 0; i<resp.data.requestLogs.length; i++) {
-                    const l = resp.data.requestLogs[i];
-                    logs.push({
-                        id: l.id,
-                        accepted: l.accepted,
-                        waifuName: l.waifuName,
-                        processedTime: new Date(l.processedTime+"Z")
-                    });
-                }
-            }
+            const logs: Log[] = resp.data.filter((r: Request) => r.requestState != RequestState.Pending)
+                .map((r: Request) => ({
+                    id: r.id,
+                    accepted: r.requestState == RequestState.Accepted,
+                    waifuName: r.name,
+                    processedTime: new Date(r.processedTime+"Z")
+                }));
+
             // now sort the logs by time
             logs.sort((a,b) => {
                 return a.processedTime < b.processedTime ? 1 : -1;
