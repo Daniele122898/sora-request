@@ -118,7 +118,7 @@ export const startFirstFetch = (): ThunkResult<any> => {
                 return a.processedTime < b.processedTime ? 1 : -1;
             });
 
-            // get the NotifyOnWaifuRequest bool
+            // get the notify on request bool. This is ugly af but whatever
             axios.get('/api/getNotify')
                 .then(resp => {
                     // dispatch it to update the state
