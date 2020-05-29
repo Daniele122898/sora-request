@@ -113,10 +113,11 @@ router.post('/editWaifu/:requestId', authCheck, (req, res) => {
     const requestId = req.params.requestId;
     let request = {
         ...req.body,
+        requestId: Number.parseInt(requestId),
         userId: req.user.id
     };
 
-    axios.post(`http://localhost:${soraPort}/api/requests/${requestId}`, request, axiosHeaders)
+    axios.put(`http://localhost:${soraPort}/api/requests/${requestId}`, request, axiosHeaders)
         .then(r => {
             res.json(r.data);
         })
@@ -140,6 +141,20 @@ router.post('/requestWaifu', authCheck, (req, res) => {
             handleError(res, e);
         });
 });
+
+router.delete('/removeRequest/:requestId', authCheck, (req, res) => {
+    const requestId = req.params.requestId;
+    const userId = req.user.id;
+    axios.delete(`http://localhost:${soraPort}/api/requests/user/${userId}/${requestId}`, axiosHeaders)
+        .then(r => {
+            res.json(r.data);
+        })
+        .catch(e => {
+            console.log(e);
+            handleError(res, e);
+        });
+});
+
 
 router.get('/getNotify', authCheck, (req, res) => {
     axios.get(`http://localhost:${soraPort}/api/requests/user/${req.user.id}/notify`, axiosHeaders)

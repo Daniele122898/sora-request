@@ -23,15 +23,6 @@ class EditWaifuRequest extends React.Component<Props> {
         const req: any = {...request, requestId: this.props.request.id};
         axios.post(`/api/editWaifu/${this.props.request.id}`, req)
             .then(resp => {
-                // request failed
-                if (resp.status != 200) {
-                    swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'Something broke...'
-                    });
-                    return;
-                }
 
                 swal.fire(
                     'Success',
@@ -39,7 +30,11 @@ class EditWaifuRequest extends React.Component<Props> {
                     'success'
                 );
                 // dispatch edit event
-                this.props.editRequest(req);
+                let r = {
+                    ...req,
+                    id: req.requestId +""
+                }
+                this.props.editRequest(r);
                 // we dont want to clear the input.
 
             }).catch(e => {
@@ -68,7 +63,7 @@ class EditWaifuRequest extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: ApplicationState, props: Props) => ({
-    request: state.requests.requests.find((req) => (req.id === props.match.params.id))
+    request: state.requests.requests.find((req) => (req.id == props.match.params.id))
 });
 
 const mapDispatchToProps = (dispatch: AnyThunkDispatch<RootState>) => ({

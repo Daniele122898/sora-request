@@ -23,7 +23,7 @@ const reducer: Reducer<RequestState, RequestAction> =
     case EDIT_REQUEST: 
         return {
             requests: state.requests.map((req) => {
-                if (req.id === action.request.id) {
+                if (req.id == action.request.id) {
                     return {
                         ...req,
                         ...action.request

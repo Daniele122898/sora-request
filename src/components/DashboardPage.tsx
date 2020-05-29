@@ -28,7 +28,7 @@ class DashboardPage extends React.Component<Props> {
                 // dispatch event
                 this.props.addRequest({
                     ...request,
-                    id: resp.data.requestId
+                    id: resp.data.id
                 });
                 // clear input
                 clearInput();

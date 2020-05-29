@@ -1,10 +1,16 @@
 import axios from 'axios';
 import {
-    ADD_REQUEST, EDIT_REQUEST, REMOVE_REQUEST,
-    SET_REQUESTS, SET_FIRST_FETCH, SET_LOGS, SET_NOTIFY, RequestState
+    ADD_REQUEST,
+    EDIT_REQUEST,
+    REMOVE_REQUEST,
+    RequestState,
+    SET_FIRST_FETCH,
+    SET_LOGS,
+    SET_NOTIFY,
+    SET_REQUESTS
 } from '../constants/index';
-import { Request, Log } from '../store/index';
-import { ThunkResult } from '../types/index';
+import {Log, Request} from '../store/index';
+import {ThunkResult} from '../types/index';
 
 export type RequestAction = AddRequest | EditRequest 
 | RemoveRequest | SetRequests | SetFirstFetch | SetLogs | SetNotify;
@@ -57,6 +63,11 @@ export const setFirstFetch = (firstFetch: boolean): SetFirstFetch => ({
 export const addRequest = (request: Request): AddRequest => ({
     type: ADD_REQUEST,
     request
+});
+
+export const removeRequest = (requestId: string): RemoveRequest => ({
+    type: REMOVE_REQUEST,
+    id: requestId
 });
 
 export const setRequests = (requests: Request[]): SetRequests => ({
