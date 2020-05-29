@@ -117,14 +117,20 @@ router.post('/editWaifu/:requestId', authCheck, (req, res) => {
         userId: req.user.id
     };
 
-    axios.put(`http://localhost:${soraPort}/api/requests/${requestId}`, request, axiosHeaders)
-        .then(r => {
-            res.json(r.data);
-        })
-        .catch(e => {
-            console.log(e);
-            handleError(res, e);
-        });
+    let p;
+    if (req.user.id == ownerId) {
+        p = axios.put(`http://localhost:${soraPort}/api/requests/${requestId}/admin`, request, axiosHeaders);
+    } else {
+        p = axios.put(`http://localhost:${soraPort}/api/requests/${requestId}`, request, axiosHeaders);
+    }
+
+    p.then(r => {
+        res.json(r.data);
+    })
+    .catch(e => {
+        console.log(e);
+        handleError(res, e);
+    });
 });
 
 router.post('/requestWaifu', authCheck, (req, res) => {
