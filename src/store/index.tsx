@@ -18,7 +18,7 @@ export interface Request {
     rarity: number;
     id: string;
     requestState?: number;
-    processedTime?: Date;
+    processedTime?: string;
 }
 
 export interface Log {

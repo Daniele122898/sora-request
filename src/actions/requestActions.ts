@@ -116,11 +116,11 @@ export const startFirstFetch = (): ThunkResult<any> => {
             // now do the same thing for the logs if they exist
             const logs: Log[] = resp.data.filter((r: Request) => r.requestState != RequestState.Pending)
                 .map((r: Request) => ({
-                    id: r.id,
-                    accepted: r.requestState == RequestState.Accepted,
-                    waifuName: r.name,
-                    processedTime: new Date(r.processedTime+"Z")
-                }));
+                      id: r.id,
+                      accepted: r.requestState == RequestState.Accepted,
+                      waifuName: r.name,
+                      processedTime: new Date(r.processedTime ? r.processedTime.substring(0, 10) : new Date().toString())
+                  }));
 
             // now sort the logs by time
             logs.sort((a,b) => {

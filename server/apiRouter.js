@@ -47,14 +47,14 @@ router.get('/checkLogin', (req, res) => {
     }
 });
 
-router.post('/request/:requestId/approve', authCheck, (req, res) => {
+router.patch('/request/:requestId/approve', authCheck, (req, res) => {
     const requestId = req.params.requestId;
     const userId = req.user.id
     if (userId != ownerId) {
         res.status(401).send("Only Sora admin can accept or reject requests!")
     }
 
-    axios.post(`http://localhost:${soraPort}/api/requests/${requestId}/approve`, request, axiosHeaders)
+    axios.patch(`http://localhost:${soraPort}/api/requests/${requestId}/approve`, null, axiosHeaders)
         .then(r => {
             res.status(200).send();
         })
@@ -65,14 +65,14 @@ router.post('/request/:requestId/approve', authCheck, (req, res) => {
 });
 
 
-router.post('/request/:requestId/reject', authCheck, (req, res) => {
+router.patch('/request/:requestId/reject', authCheck, (req, res) => {
     const requestId = req.params.requestId;
     const userId = req.user.id
     if (userId != ownerId) {
         res.status(401).send("Only Sora admin can accept or reject requests!")
     }
 
-    axios.post(`http://localhost:${soraPort}/api/requests/${requestId}/reject`, request, axiosHeaders)
+    axios.patch(`http://localhost:${soraPort}/api/requests/${requestId}/reject`, null, axiosHeaders)
         .then(r => {
             res.status(200).send();
         })
