@@ -1,12 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import axios from 'axios';
 import swal from 'sweetalert2';
 import PageHeader from './PageHeader';
-import WaifuRequestForm, { WaifuRequest } from './WaifuRequestForm';
-import { ApplicationState, Request } from '../store';
-import { AnyThunkDispatch } from '../types/index';
-import { editRequest, EditRequest } from '../actions/requestActions';
+import WaifuRequestForm, {WaifuRequest} from './WaifuRequestForm';
+import {ApplicationState, Request} from '../store';
+import {AnyThunkDispatch} from '../types/index';
+import {editRequest, EditRequest} from '../actions/requestActions';
 
 interface Props {
     match: any;
@@ -17,23 +17,22 @@ interface Props {
 type RootState = {};
 
 class EditWaifuRequest extends React.Component<Props> {
-    
+
     onSubmit = (request: WaifuRequest, clearInput: Function) => {
         if (!this.props.request) return;
         const req: any = {...request, requestId: this.props.request.id};
         axios.post(`/api/editWaifu/${this.props.request.id}`, req)
-        .then(resp => {
-            // request failed
-            if (resp.status != 200) {
-                swal.fire({
-                    type: 'error',
-                    title: 'Oops...',
-                    text: 'Something broke...'
-                  });
-                return;
-            }
-            // check if success
-            if (resp.data.success) {
+            .then(resp => {
+                // request failed
+                if (resp.status != 200) {
+                    swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Something broke...'
+                    });
+                    return;
+                }
+
                 swal.fire(
                     'Success',
                     "Successfully edited the request",
@@ -42,35 +41,29 @@ class EditWaifuRequest extends React.Component<Props> {
                 // dispatch edit event
                 this.props.editRequest(req);
                 // we dont want to clear the input.
-            } else {
-                swal.fire({
-                    type: 'error',
-                    title: 'Oops...',
-                    text: resp.data.error ? resp.data.error : 'Something broke...'
-                });
-            }
-        }).catch(e => {
+
+            }).catch(e => {
             swal.fire({
                 type: 'error',
                 title: 'Oops...',
                 text: 'Something broke...'
-              });
+            });
         });
-     }
-    
+    }
+
     render() {
         return (
-        <div>
-            <PageHeader 
-                title={"Edit Your Waifu Request"} 
-            />
-        <div className="content-container">
-          <WaifuRequestForm 
-            onSubmit={this.onSubmit}
-            request={this.props.request}
-        />
-        </div>
-        </div>)
+            <div>
+                <PageHeader
+                    title={"Edit Your Waifu Request"}
+                />
+                <div className="content-container">
+                    <WaifuRequestForm
+                        onSubmit={this.onSubmit}
+                        request={this.props.request}
+                    />
+                </div>
+            </div>)
     }
 }
 
