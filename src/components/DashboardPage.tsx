@@ -20,14 +20,6 @@ class DashboardPage extends React.Component<Props> {
         // send the request to our backend
         axios.post('/api/requestWaifu', request)
             .then(resp => {
-                if (resp.status != 200) {
-                    swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'Something broke...'
-                    });
-                    return;
-                }
                 swal.fire(
                     'Success',
                     "Successfully requested a waifu!",
@@ -41,13 +33,16 @@ class DashboardPage extends React.Component<Props> {
                 // clear input
                 clearInput();
 
-            }).catch(err => {
-            swal.fire({
-                type: 'error',
-                title: 'Oops...',
-                text: 'Something broke...'
+            })
+            .catch(err => {
+                console.log(err.response);
+
+                swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: err.response.data.error,
+                });
             });
-        });
     }
 
     render() {
