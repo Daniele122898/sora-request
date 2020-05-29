@@ -35,7 +35,7 @@ class DashboardPage extends React.Component<Props> {
 
             })
             .catch(err => {
-                console.log(err.response);
+                console.error(err);
 
                 swal.fire({
                     type: 'error',

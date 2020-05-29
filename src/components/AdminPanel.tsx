@@ -77,20 +77,6 @@ class AdminPanel extends React.Component<Props, State> {
         }
 
         p.then(resp => {
-            if (resp.status != 200) {
-                let text = 'Something broke...';
-                if (resp.data != undefined) {
-                    text = resp.data;
-                }
-
-                swal.fire({
-                  type: 'error',
-                  title: 'Oops...',
-                  text
-                });
-                return;
-            }
-
             swal.fire(
                 'Success',
                 `Successfully ${accept ? 'accepted' : 'declined'} request!`,
@@ -103,12 +89,12 @@ class AdminPanel extends React.Component<Props, State> {
                 this.props.setRequests(this.state.requests);
             })
 
-        }).catch(e=> {
+        }).catch(e => {
             console.error(e);
             swal.fire({
                 type: 'error',
                 title: 'Oops...',
-                text: 'Something broke...'
+                text: e.response.data.error
             });
         })
     }

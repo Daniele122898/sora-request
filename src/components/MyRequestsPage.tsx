@@ -12,6 +12,7 @@ import CardEditor from './CardEditor';
 import { getRarityStringFromInt } from './Card';
 import RequestLogs from './RequestLogs';
 import NotifyOnRequest from './NotifyOnRequest';
+import {IoMdTrash} from "react-icons/io";
 
 JavascriptTimeAgo.locale(en);
 
@@ -46,7 +47,16 @@ class MyRequestsPage extends React.Component<Props> {
                         name={req.name}
                         rarity={getRarityStringFromInt(req.rarity)}
                         id={req.id}
-                    />
+                    >
+                        <div>
+                            <button
+                                className="button button--full-width button-red"
+                                onClick={() => {}}
+                            >
+                                <IoMdTrash/>
+                            </button>
+                        </div>
+                    </CardEditor>
                 </div>
             );
         });
