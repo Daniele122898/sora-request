@@ -130,8 +130,7 @@ router.post('/requestWaifu', authCheck, (req, res) => {
         ...req.body,
         userId: req.user.id
     };
-
-    axios.post(`http://localhost:${soraPort}/api​/requests​/user​/${req.user.id}`, request, axiosHeaders)
+    axios.post(`http://localhost:${soraPort}/api/requests/user/${req.user.id}`, request, axiosHeaders)
         .then(r => {
             res.json(r.data);
         })
