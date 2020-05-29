@@ -20,8 +20,8 @@ class EditWaifuRequest extends React.Component<Props> {
     
     onSubmit = (request: WaifuRequest, clearInput: Function) => {
         if (!this.props.request) return;
-        const req: Request = {...request, id: this.props.request.id};
-        axios.post('/api/editWaifu', req)
+        const req: any = {...request, requestId: this.props.request.id};
+        axios.post(`/api/editWaifu/${this.props.request.id}`, req)
         .then(resp => {
             // request failed
             if (resp.status != 200) {

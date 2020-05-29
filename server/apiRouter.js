@@ -1,8 +1,14 @@
 const router = require('express').Router();
 const axios = require('axios');
+const keys = require('./keys');
 
 const soraPort = process.env.NODE_ENV === 'production' ? 8000 : 8100;
 const ownerId = '192750776005689344';
+const axiosHeaders = {
+    headers: {
+        'Authorization': keys.apiKey
+    }
+}
 
 const authCheck = (req, res, next) => {
     if (req.user) {
@@ -47,7 +53,7 @@ router.post('/request/:requestId/approve', authCheck, (req, res) => {
         res.status(401).send("Only Sora admin can accept or reject requests!")
     }
 
-    axios.post(`http://localhost:${soraPort}/api/requests/${requestId}/approve`, request)
+    axios.post(`http://localhost:${soraPort}/api/requests/${requestId}/approve`, request, axiosHeaders)
         .then(r => {
             res.status(200).send();
         })
@@ -65,7 +71,7 @@ router.post('/request/:requestId/reject', authCheck, (req, res) => {
         res.status(401).send("Only Sora admin can accept or reject requests!")
     }
 
-    axios.post(`http://localhost:${soraPort}/api/requests/${requestId}/reject`, request)
+    axios.post(`http://localhost:${soraPort}/api/requests/${requestId}/reject`, request, axiosHeaders)
         .then(r => {
             res.status(200).send();
         })
@@ -76,7 +82,7 @@ router.post('/request/:requestId/reject', authCheck, (req, res) => {
 });
 
 router.get('/getAllRequests', authCheck, (req, res) => {
-    axios.get(`http://localhost:${soraPort}/api/requests/user/${req.user.id}`)
+    axios.get(`http://localhost:${soraPort}/api/requests/user/${req.user.id}`, axiosHeaders)
         .then(r => {
             res.json(r.data);
         })
@@ -92,7 +98,7 @@ router.get('/getAdminRequests', authCheck, (req, res) => {
         res.status(401).send("Only Sora admin can access all requests!")
     }
 
-    axios.get(`http://localhost:${soraPort}/api/requests`)
+    axios.get(`http://localhost:${soraPort}/api/requests`, axiosHeaders)
         .then(r => {
             res.json(r.data);
         })
@@ -102,13 +108,14 @@ router.get('/getAdminRequests', authCheck, (req, res) => {
         });
 });
 
-router.post('/editWaifu', authCheck, (req, res) => {
+router.post('/editWaifu/:requestId', authCheck, (req, res) => {
+    const requestId = req.params.requestId;
     let request = {
         ...req.body,
         userId: req.user.id
     };
 
-    axios.post(`http://localhost:${soraPort}/api/requests/${requestId}`, request)
+    axios.post(`http://localhost:${soraPort}/api/requests/${requestId}`, request, axiosHeaders)
         .then(r => {
             res.json(r.data);
         })
@@ -124,7 +131,7 @@ router.post('/requestWaifu', authCheck, (req, res) => {
         userId: req.user.id
     };
 
-    axios.post(`http://localhost:${soraPort}/api​/requests​/user​/${req.user.id}`, request)
+    axios.post(`http://localhost:${soraPort}/api​/requests​/user​/${req.user.id}`, request, axiosHeaders)
         .then(r => {
             res.json(r.data);
         })
@@ -135,7 +142,7 @@ router.post('/requestWaifu', authCheck, (req, res) => {
 });
 
 router.get('/getNotify', authCheck, (req, res) => {
-    axios.get(`http://localhost:${soraPort}/api/requests/user/${req.user.id}/notify`)
+    axios.get(`http://localhost:${soraPort}/api/requests/user/${req.user.id}/notify`, axiosHeaders)
         .then(r => {
             res.json(r.data);
         })
@@ -151,7 +158,7 @@ router.post('/setNotify', authCheck, (req, res) => {
         userId: req.user.id
     };
 
-    axios.post(`http://localhost:${soraPort}/api/requests/user/${req.user.id}/notify`, request)
+    axios.post(`http://localhost:${soraPort}/api/requests/user/${req.user.id}/notify`, request, axiosHeaders)
         .then(r => {
             res.json(r.data);
         })
