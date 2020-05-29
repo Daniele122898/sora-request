@@ -153,12 +153,7 @@ router.get('/getNotify', authCheck, (req, res) => {
 });
 
 router.post('/setNotify', authCheck, (req, res) => {
-    let request = {
-        ...req.body,
-        userId: req.user.id
-    };
-
-    axios.post(`http://localhost:${soraPort}/api/requests/user/${req.user.id}/notify`, request, axiosHeaders)
+    axios.post(`http://localhost:${soraPort}/api/requests/user/${req.user.id}/notify`, req.body, axiosHeaders)
         .then(r => {
             res.json(r.data);
         })

@@ -76,7 +76,7 @@ export const editRequest = (request: Request): EditRequest => ({
 
 export const startSetNotify= (notify: boolean): ThunkResult<any> => {
     return async (dispatch) => {
-        const resp = await axios.post('/api/setNotify', {notifyOnWaifuRequest: notify});
+        const resp = await axios.post('/api/setNotify', notify);
     
         if (resp.data.success) {
             dispatch(setNotify(notify));
