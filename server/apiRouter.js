@@ -3,6 +3,7 @@ const axios = require('axios');
 const keys = require('./keys');
 
 const soraPort = process.env.NODE_ENV === 'production' ? 8000 : 8100;
+const url = process.env.NODE_ENV === 'production' ? 'http://api.sorabot.pw/bot/0/api' : `http://localhost:${soraPort}/api`;
 const ownerId = '192750776005689344';
 const axiosHeaders = {
     headers: {
@@ -54,7 +55,7 @@ router.patch('/request/:requestId/approve', authCheck, (req, res) => {
         res.status(401).send("Only Sora admin can accept or reject requests!")
     }
 
-    axios.patch(`http://localhost:${soraPort}/api/requests/${requestId}/approve`, null, axiosHeaders)
+    axios.patch(`${url}/requests/${requestId}/approve`, null, axiosHeaders)
         .then(r => {
             res.status(200).send();
         })
@@ -72,7 +73,7 @@ router.patch('/request/:requestId/reject', authCheck, (req, res) => {
         res.status(401).send("Only Sora admin can accept or reject requests!")
     }
 
-    axios.patch(`http://localhost:${soraPort}/api/requests/${requestId}/reject`, null, axiosHeaders)
+    axios.patch(`${url}/requests/${requestId}/reject`, null, axiosHeaders)
         .then(r => {
             res.status(200).send();
         })
@@ -83,7 +84,7 @@ router.patch('/request/:requestId/reject', authCheck, (req, res) => {
 });
 
 router.get('/getAllRequests', authCheck, (req, res) => {
-    axios.get(`http://localhost:${soraPort}/api/requests/user/${req.user.id}`, axiosHeaders)
+    axios.get(`${url}/requests/user/${req.user.id}`, axiosHeaders)
         .then(r => {
             res.json(r.data);
         })
@@ -99,7 +100,7 @@ router.get('/getAdminRequests', authCheck, (req, res) => {
         res.status(401).send("Only Sora admin can access all requests!")
     }
 
-    axios.get(`http://localhost:${soraPort}/api/requests`, axiosHeaders)
+    axios.get(`${url}/requests`, axiosHeaders)
         .then(r => {
             res.json(r.data);
         })
@@ -119,9 +120,9 @@ router.post('/editWaifu/:requestId', authCheck, (req, res) => {
 
     let p;
     if (req.user.id == ownerId) {
-        p = axios.put(`http://localhost:${soraPort}/api/requests/${requestId}/admin`, request, axiosHeaders);
+        p = axios.put(`${url}/requests/${requestId}/admin`, request, axiosHeaders);
     } else {
-        p = axios.put(`http://localhost:${soraPort}/api/requests/${requestId}`, request, axiosHeaders);
+        p = axios.put(`${url}/requests/${requestId}`, request, axiosHeaders);
     }
 
     p.then(r => {
@@ -138,7 +139,7 @@ router.post('/requestWaifu', authCheck, (req, res) => {
         ...req.body,
         userId: req.user.id
     };
-    axios.post(`http://localhost:${soraPort}/api/requests/user/${req.user.id}`, request, axiosHeaders)
+    axios.post(`${url}/requests/user/${req.user.id}`, request, axiosHeaders)
         .then(r => {
             res.json(r.data);
         })
@@ -151,7 +152,7 @@ router.post('/requestWaifu', authCheck, (req, res) => {
 router.delete('/removeRequest/:requestId', authCheck, (req, res) => {
     const requestId = req.params.requestId;
     const userId = req.user.id;
-    axios.delete(`http://localhost:${soraPort}/api/requests/user/${userId}/${requestId}`, axiosHeaders)
+    axios.delete(`${url}/requests/user/${userId}/${requestId}`, axiosHeaders)
         .then(r => {
             res.json(r.data);
         })
@@ -163,7 +164,7 @@ router.delete('/removeRequest/:requestId', authCheck, (req, res) => {
 
 
 router.get('/getNotify', authCheck, (req, res) => {
-    axios.get(`http://localhost:${soraPort}/api/requests/user/${req.user.id}/notify`, axiosHeaders)
+    axios.get(`${url}/requests/user/${req.user.id}/notify`, axiosHeaders)
         .then(r => {
             res.json(r.data);
         })
@@ -174,7 +175,7 @@ router.get('/getNotify', authCheck, (req, res) => {
 });
 
 router.post('/setNotify', authCheck, (req, res) => {
-    axios.post(`http://localhost:${soraPort}/api/requests/user/${req.user.id}/notify`, req.body, axiosHeaders)
+    axios.post(`${url}/requests/user/${req.user.id}/notify`, req.body, axiosHeaders)
         .then(r => {
             res.json(r.data);
         })
