@@ -68,12 +68,15 @@ class AdminPanel extends React.Component<Props, State> {
         });
     }
 
-    makeApprovalRequest = (requestId: string ,accept: boolean) => {
+    makeApprovalRequest = (requestId: string ,accept: boolean, reason = null) => {
         let p;
         if (accept) {
             p = axios.patch(`/api/request/${requestId}/approve`);
         } else {
-            p = axios.patch(`/api/request/${requestId}/reject`);
+            const body = {
+                reason: reason
+            }
+            p = axios.patch(`/api/request/${requestId}/reject`, body);
         }
 
         p.then(resp => {
@@ -103,8 +106,12 @@ class AdminPanel extends React.Component<Props, State> {
         this.makeApprovalRequest(id, true);
     }
 
-    declineRequest = (id: string) => {
-        this.makeApprovalRequest(id, false);
+    declineRequest = async (id: string) => {
+        const { value: reason } = await swal.fire({
+           title : 'Reason for rejecting Waifu',
+           input: 'text'
+        });
+        this.makeApprovalRequest(id, false, reason);
     }
 
     renderCards = () => {
