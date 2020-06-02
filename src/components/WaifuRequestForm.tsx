@@ -1,10 +1,12 @@
 import React from 'react';
 import Card from './Card';
-import { Request } from '../store/index';
+import {ApplicationState, Request, WaifuRarity} from '../store/index';
+import {connect} from "react-redux";
 
 interface Props {
     onSubmit: Function;
     request?: Request;
+    rarities: WaifuRarity[];
 }
 
 interface State {
@@ -32,11 +34,12 @@ class WaifuRequestForm extends React.Component<Props, State> {
     constructor(props: any) {
         super(props);
         //initialize state so we can edit the request later
+        const rarity = this.props.request ? this.props.request.rarity : this.props.rarities[0].value;
         this.state = {
             request: {
                 name: this.props.request ? this.props.request.name : '',
                 imageUrl: this.props.request ? this.props.request.imageUrl : '',
-                rarity: this.props.request ? this.props.request.rarity : WaifuRarityE.Common,
+                rarity,
             },
             error: '',
             buttonText: this.props.request ? 'Save Edit' : 'Submit Request'
@@ -78,7 +81,14 @@ class WaifuRequestForm extends React.Component<Props, State> {
             return;
         }
 
-        this.props.onSubmit(this.state.request, this.clearInput);
+        // Interpolate name
+        const name = this.getInterpolatedName();
+        const finalReq: WaifuRequest = {
+            ...this.state.request,
+            name
+        };
+
+        this.props.onSubmit(finalReq, this.clearInput);
     };
 
     clearInput = () => {
@@ -109,22 +119,20 @@ class WaifuRequestForm extends React.Component<Props, State> {
     }
 
     getRarityString = (): string => {
-        switch(this.state.request.rarity) {
-            case WaifuRarityE.Common:
-                return "Common";
-            case WaifuRarityE.Uncommon:
-                return "Uncommon";
-            case WaifuRarityE.Rare:
-                return "Rare";
-            case WaifuRarityE.Epic:
-                return "Epic";
-            case WaifuRarityE.UltimateWaifu:
-                return "Ultimate Waifu";
-            case WaifuRarityE.Special:
-                return "Special";
-            default:
-                return "Common";
+        const rar = this.state.request.rarity;
+        const r =this.props.rarities.find(r => r.value == rar);
+        return r ? r.name : "Common";
+    };
+
+    getInterpolatedName = (): string => {
+        const name = this.state.request.name;
+        const rarity = this.state.request.rarity;
+        let interpolatedString = name;
+        const rar = this.props.rarities.find(x=> x.value == rarity);
+        if (rar) {
+            interpolatedString = rar.interpolationGuideline.replace("%", name);
         }
+        return interpolatedString;
     };
 
     render() {
@@ -153,12 +161,8 @@ class WaifuRequestForm extends React.Component<Props, State> {
                             value={this.state.request.rarity}
                             onChange={this.onRarityChange}
                         >
-                            <option value={WaifuRarityE.Common.toLocaleString()}>Common</option>
-                            <option value={WaifuRarityE.Uncommon.toLocaleString()}>Uncommon</option>
-                            <option value={WaifuRarityE.Rare.toLocaleString()}>Rare</option>
-                            <option value={WaifuRarityE.Epic.toLocaleString()}>Epic</option>
-                            <option value={WaifuRarityE.UltimateWaifu.toLocaleString()}>Ultimate Waifu</option>
-                            <option value={WaifuRarityE.Special.toLocaleString()}>Special</option>
+                            {this.props.rarities.map((rarity: WaifuRarity) =>
+                                (<option value={rarity.value}>{rarity.name}</option>))}
                         </select>
                         <button className="button">{this.state.buttonText}</button>
                     </form>
@@ -166,8 +170,8 @@ class WaifuRequestForm extends React.Component<Props, State> {
                 <div className="split-between-30 center">
                     <h2 className="image-preview--title">Preview</h2>
                     <Card 
-                        imageUrl={this.state.request.imageUrl}
-                        name={this.state.request.name}
+                        imageUrl={this.state.request.imageUrl ? this.state.request.imageUrl : 'https://cdn.argonaut.pw/file/8cad8988-89d4-4a1f-a075-d331ffb2aa8e.png'}
+                        name={this.getInterpolatedName()}
                         rarity={this.getRarityString()}
                         enableIdFooter={true}
                     />
@@ -177,4 +181,8 @@ class WaifuRequestForm extends React.Component<Props, State> {
     }
 }
 
-export default WaifuRequestForm;
+const mapStateToProps = ({requests}: ApplicationState) => ({
+    rarities: requests.rarities,
+});
+
+export default connect(mapStateToProps)(WaifuRequestForm);;
