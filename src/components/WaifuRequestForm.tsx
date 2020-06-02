@@ -13,6 +13,7 @@ interface State {
     request: WaifuRequest;
     error: string;
     buttonText: string;
+    sending: boolean;
 }
 
 export enum WaifuRarityE {
@@ -41,6 +42,7 @@ class WaifuRequestForm extends React.Component<Props, State> {
                 imageUrl: this.props.request ? this.props.request.imageUrl : '',
                 rarity,
             },
+            sending: false,
             error: '',
             buttonText: this.props.request ? 'Save Edit' : 'Submit Request'
         }
@@ -48,12 +50,14 @@ class WaifuRequestForm extends React.Component<Props, State> {
 
     onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (this.state.sending)
+            return; // Don't submit twice
         // check before submitting
         // first let's check the image
         const req = this.state.request;
         if (!req.imageUrl.startsWith('http')) {
             this.setState(() => 
-            ({ error: 'Image Url should be an URL to an image!' }));
+            ({ error: 'Image Url should be an URL to an image!', sending: false }));
             return;
         }
         if (!req.imageUrl.endsWith('.jpg') &&
@@ -61,7 +65,7 @@ class WaifuRequestForm extends React.Component<Props, State> {
             !req.imageUrl.endsWith('.gif') &&
             !req.imageUrl.endsWith('.jpeg')) {
                 this.setState(() => 
-            ({ error: 'Image Url should be an URL to an image!' }));
+            ({ error: 'Image Url should be an URL to an image!', sending: false }));
             return;
         }
         // first trim the name
@@ -76,7 +80,8 @@ class WaifuRequestForm extends React.Component<Props, State> {
         // now check name
         if (req.name.length < 2) {
             this.setState(() => ({
-                error: 'Name should be no less than 2 characters!'
+                error: 'Name should be no less than 2 characters!',
+                sending: false
             }));
             return;
         }
@@ -91,13 +96,20 @@ class WaifuRequestForm extends React.Component<Props, State> {
         this.props.onSubmit(finalReq, this.clearInput);
     };
 
-    clearInput = () => {
+    clearInput = (clear = true) => {
+        if (!clear) {
+            this.setState(() => ({
+                sending: false
+            }))
+            return;
+        }
         this.setState(() => ({
             request: {
                 name: '',
                 imageUrl: '',
                 rarity: WaifuRarityE.Common
-            }
+            },
+            sending: false
         }));
     }
 
@@ -164,7 +176,7 @@ class WaifuRequestForm extends React.Component<Props, State> {
                             {this.props.rarities.map((rarity: WaifuRarity) =>
                                 (<option value={rarity.value}>{rarity.name}</option>))}
                         </select>
-                        <button className="button">{this.state.buttonText}</button>
+                        <button disabled={this.state.sending} className="button">{this.state.buttonText}</button>
                     </form>
                 </div>
                 <div className="split-between-30 center">

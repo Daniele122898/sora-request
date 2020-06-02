@@ -64,7 +64,7 @@ class DashboardPage extends React.Component<Props, State> {
             })
             .catch(err => {
                 console.error(err);
-
+                clearInput(false);
                 swal.fire({
                     type: 'error',
                     title: 'Oops...',
