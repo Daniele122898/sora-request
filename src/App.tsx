@@ -6,9 +6,12 @@ import configureStore from './store/configureStore';
 import LoadingPage from './components/LoadingPage';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
-import { login } from './actions/auth';
+import {getWaifuRarities} from "./actions/requestActions";
 
 const store = configureStore();
+// @ts-ignore
+store.dispatch(getWaifuRarities())
+export {store};
 /*
 store.dispatch(login({
   username: 'Serenity',

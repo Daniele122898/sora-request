@@ -12,6 +12,8 @@ declare global {
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+let store;
+
 export default () => {
   // store creation
   const store = createStore(
@@ -22,6 +24,7 @@ export default () => {
     composeEnhancers(applyMiddleware(thunk))
     //window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   );
+
   return store;
 };
 

@@ -185,4 +185,4 @@ const mapStateToProps = ({requests}: ApplicationState) => ({
     rarities: requests.rarities,
 });
 
-export default connect(mapStateToProps)(WaifuRequestForm);;
+export default connect(mapStateToProps)(WaifuRequestForm);

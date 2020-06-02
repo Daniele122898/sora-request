@@ -1,18 +1,32 @@
 import React, { ReactChild } from 'react';
+import {store} from "../App";
 
 const getRarityStringFromInt = (rarity: Number) => {
+    const state = store.getState()
+    const rarities = state.requests.rarities;
+    if (!rarities || rarities.length == 0) {
+        return getStandardRarities(rarity);
+    }
+    const r = rarities.find(x => x.value == rarity);
+    if (!r) {
+        return getStandardRarities(rarity);
+    }
+    return r.name;
+};
+
+const getStandardRarities = (rarity: Number) => {
     switch(rarity) {
-        case 0: 
+        case 0:
             return "Common";
-        case 1: 
+        case 1:
             return "Uncommon";
-        case 2: 
+        case 2:
             return "Rare";
-        case 3: 
+        case 3:
             return "Epic";
-        case 99: 
+        case 99:
             return "Ultimate Waifu";
-        case 98: 
+        case 98:
             return "Special";
         default:
             return "Common";
