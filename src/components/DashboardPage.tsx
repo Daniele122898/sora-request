@@ -5,13 +5,15 @@ import swal from 'sweetalert2';
 import WaifuRequestForm, {WaifuRequest} from './WaifuRequestForm';
 import PageHeader from './PageHeader';
 import {AnyThunkDispatch} from '../types/index';
-import {addRequest, AddRequest} from '../actions/requestActions';
-import {Request} from '../store/index';
+import {addRequest, AddRequest, getWaifuRarities} from '../actions/requestActions';
+import {ApplicationState, Request, WaifuRarity} from '../store/index';
 
 type RootState = {};
 
 interface Props {
     addRequest: (request: Request) => AddRequest;
+    rarities: WaifuRarity[];
+    startGetRarities(): any;
 }
 
 class DashboardPage extends React.Component<Props> {
@@ -61,8 +63,13 @@ class DashboardPage extends React.Component<Props> {
     }
 }
 
-const mapDispatchToProps = (dispatch: AnyThunkDispatch<RootState>) => ({
-    addRequest: (request: Request) => dispatch(addRequest(request))
+const mapStateToProps = ({requests}: ApplicationState) => ({
+    rarities: requests.rarities,
 });
 
-export default connect(undefined, mapDispatchToProps)(DashboardPage);
+const mapDispatchToProps = (dispatch: AnyThunkDispatch<RootState>) => ({
+    addRequest: (request: Request) => dispatch(addRequest(request)),
+    startGetRarities: () => dispatch(getWaifuRarities()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardPage);
