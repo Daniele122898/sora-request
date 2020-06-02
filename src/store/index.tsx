@@ -10,6 +10,7 @@ export interface RequestState {
     logs: Log[];
     firstFetch: boolean;
     notifyOnWaifuRequest: boolean;
+    rarities: WaifuRarity[];
 }
 
 export interface Request {
@@ -19,6 +20,12 @@ export interface Request {
     id: string;
     requestState?: number;
     processedTime?: string;
+}
+
+export interface WaifuRarity {
+    name: string;
+    value: number;
+    interpolationGuideline: string;
 }
 
 export interface Log {

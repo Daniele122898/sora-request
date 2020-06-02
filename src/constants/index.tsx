@@ -16,6 +16,9 @@ export type REMOVE_REQUEST = typeof REMOVE_REQUEST;
 export const SET_REQUESTS = 'SET_REQUESTS';
 export type SET_REQUESTS = typeof SET_REQUESTS;
 
+export const GET_WAIFU_RARITIES = 'GET_WAIFU_RARITIES';
+export type GET_WAIFU_RARITIES = typeof GET_WAIFU_RARITIES;
+
 export const SET_LOGS = 'SET_LOGS';
 export type SET_LOGS = typeof SET_LOGS;
 

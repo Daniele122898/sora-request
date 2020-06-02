@@ -13,7 +13,7 @@ interface State {
     buttonText: string;
 }
 
-export enum WaifuRarity {
+export enum WaifuRarityE {
     Common = 0,
     Uncommon = 1,
     Rare = 2,
@@ -36,7 +36,7 @@ class WaifuRequestForm extends React.Component<Props, State> {
             request: {
                 name: this.props.request ? this.props.request.name : '',
                 imageUrl: this.props.request ? this.props.request.imageUrl : '',
-                rarity: this.props.request ? this.props.request.rarity : WaifuRarity.Common,
+                rarity: this.props.request ? this.props.request.rarity : WaifuRarityE.Common,
             },
             error: '',
             buttonText: this.props.request ? 'Save Edit' : 'Submit Request'
@@ -86,7 +86,7 @@ class WaifuRequestForm extends React.Component<Props, State> {
             request: {
                 name: '',
                 imageUrl: '',
-                rarity: WaifuRarity.Common
+                rarity: WaifuRarityE.Common
             }
         }));
     }
@@ -110,17 +110,17 @@ class WaifuRequestForm extends React.Component<Props, State> {
 
     getRarityString = (): string => {
         switch(this.state.request.rarity) {
-            case WaifuRarity.Common: 
+            case WaifuRarityE.Common:
                 return "Common";
-            case WaifuRarity.Uncommon: 
+            case WaifuRarityE.Uncommon:
                 return "Uncommon";
-            case WaifuRarity.Rare: 
+            case WaifuRarityE.Rare:
                 return "Rare";
-            case WaifuRarity.Epic: 
+            case WaifuRarityE.Epic:
                 return "Epic";
-            case WaifuRarity.UltimateWaifu: 
+            case WaifuRarityE.UltimateWaifu:
                 return "Ultimate Waifu";
-            case WaifuRarity.Special: 
+            case WaifuRarityE.Special:
                 return "Special";
             default:
                 return "Common";
@@ -153,12 +153,12 @@ class WaifuRequestForm extends React.Component<Props, State> {
                             value={this.state.request.rarity}
                             onChange={this.onRarityChange}
                         >
-                            <option value={WaifuRarity.Common.toLocaleString()}>Common</option>
-                            <option value={WaifuRarity.Uncommon.toLocaleString()}>Uncommon</option>
-                            <option value={WaifuRarity.Rare.toLocaleString()}>Rare</option>
-                            <option value={WaifuRarity.Epic.toLocaleString()}>Epic</option>
-                            <option value={WaifuRarity.UltimateWaifu.toLocaleString()}>Ultimate Waifu</option>
-                            <option value={WaifuRarity.Special.toLocaleString()}>Special</option>
+                            <option value={WaifuRarityE.Common.toLocaleString()}>Common</option>
+                            <option value={WaifuRarityE.Uncommon.toLocaleString()}>Uncommon</option>
+                            <option value={WaifuRarityE.Rare.toLocaleString()}>Rare</option>
+                            <option value={WaifuRarityE.Epic.toLocaleString()}>Epic</option>
+                            <option value={WaifuRarityE.UltimateWaifu.toLocaleString()}>Ultimate Waifu</option>
+                            <option value={WaifuRarityE.Special.toLocaleString()}>Special</option>
                         </select>
                         <button className="button">{this.state.buttonText}</button>
                     </form>

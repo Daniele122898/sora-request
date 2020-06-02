@@ -174,6 +174,17 @@ router.get('/getNotify', authCheck, (req, res) => {
         });
 });
 
+router.get('/getRarities', (req, res) => {
+    axios.get(`${url}/waifus/rarities`)
+        .then(r => {
+            res.json(r.data);
+        })
+        .catch(e => {
+            console.log(e);
+            handleError(res, e);
+        });
+});
+
 router.post('/setNotify', authCheck, (req, res) => {
     axios.post(`${url}/requests/user/${req.user.id}/notify`, req.body, axiosHeaders)
         .then(r => {

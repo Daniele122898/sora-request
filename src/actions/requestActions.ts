@@ -1,7 +1,8 @@
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 import {
     ADD_REQUEST,
     EDIT_REQUEST,
+    GET_WAIFU_RARITIES,
     REMOVE_REQUEST,
     RequestState,
     SET_FIRST_FETCH,
@@ -9,15 +10,20 @@ import {
     SET_NOTIFY,
     SET_REQUESTS
 } from '../constants/index';
-import {Log, Request} from '../store/index';
+import {Log, Request, WaifuRarity} from '../store/index';
 import {ThunkResult} from '../types/index';
 
 export type RequestAction = AddRequest | EditRequest 
-| RemoveRequest | SetRequests | SetFirstFetch | SetLogs | SetNotify;
+| RemoveRequest | SetRequests | SetFirstFetch | SetLogs | SetNotify | GetRarities;
 
 export interface SetLogs {
     type: SET_LOGS;
     logs: Log[];
+}
+
+export interface GetRarities {
+    type: GET_WAIFU_RARITIES;
+    rarities: WaifuRarity[];
 }
 
 export interface AddRequest {
@@ -49,6 +55,11 @@ export interface SetNotify {
     type: SET_NOTIFY;
     notifyOnWaifuRequest: boolean;
 }
+
+export const setWaifuRarities = (rarities: WaifuRarity[]): GetRarities => ({
+    type: GET_WAIFU_RARITIES,
+    rarities
+});
 
 export const setNotify = (notifyOnWaifuRequest: boolean): SetNotify => ({
     type: SET_NOTIFY,
@@ -84,6 +95,36 @@ export const editRequest = (request: Request): EditRequest => ({
     type: EDIT_REQUEST,
     request
 });
+
+export const getWaifuRarities = (): ThunkResult<Promise<any>> => {
+    return async (dispatch): Promise<any> => {
+        let resp: AxiosResponse<any>;
+
+        try {
+            resp = await axios.get('/api/getRarities');
+        } catch (error) {
+            return {
+                error: "Couldn't reach Sora Api"
+            }
+        }
+
+        if (resp == undefined || resp.data == undefined) {
+            return {
+                error: "Couldn't reach backend... You shouldn't see this website online lol."
+            };
+        }
+
+        if (resp.status !== 200) {
+            return {
+                error: resp.data != undefined ? resp.data: "Couldn't reach Sora Api"
+            }
+        }
+
+        dispatch(setWaifuRarities(resp.data));
+
+        return {};
+    }
+}
 
 export const startSetNotify= (notify: boolean): ThunkResult<any> => {
     return async (dispatch) => {
