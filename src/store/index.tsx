@@ -33,6 +33,8 @@ export interface Log {
     accepted: boolean;
     waifuName: string;
     processedTime: Date;
+    imageUrl: string;
+    reason?: string;
 }
 
 export interface AuthState {
