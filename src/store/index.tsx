@@ -20,6 +20,7 @@ export interface Request {
     id: string;
     requestState?: number;
     processedTime?: string;
+    rejectReason?: string;
 }
 
 export interface WaifuRarity {
@@ -34,7 +35,7 @@ export interface Log {
     waifuName: string;
     processedTime: Date;
     imageUrl: string;
-    reason?: string;
+    rejectReason?: string;
 }
 
 export interface AuthState {

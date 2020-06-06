@@ -161,7 +161,8 @@ export const startFirstFetch = (): ThunkResult<any> => {
                         accepted: r.requestState == RequestState.Accepted,
                         waifuName: r.name,
                         processedTime: new Date(r.processedTime ? r.processedTime.substring(0, 10) : new Date().toString()),
-                        
+                        imageUrl: r.imageUrl,
+                        rejectReason: r.rejectReason,
                     }));
 
                 // now sort the logs by time
