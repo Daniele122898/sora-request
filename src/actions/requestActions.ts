@@ -13,8 +13,8 @@ import {
 import {Log, Request, WaifuRarity} from '../store/index';
 import {ThunkResult} from '../types/index';
 
-export type RequestAction = AddRequest | EditRequest 
-| RemoveRequest | SetRequests | SetFirstFetch | SetLogs | SetNotify | GetRarities;
+export type RequestAction = AddRequest | EditRequest
+    | RemoveRequest | SetRequests | SetFirstFetch | SetLogs | SetNotify | GetRarities;
 
 export interface SetLogs {
     type: SET_LOGS;
@@ -116,7 +116,7 @@ export const getWaifuRarities = (): ThunkResult<Promise<any>> => {
 
         if (resp.status !== 200) {
             return {
-                error: resp.data != undefined ? resp.data: "Couldn't reach Sora Api"
+                error: resp.data != undefined ? resp.data : "Couldn't reach Sora Api"
             }
         }
 
@@ -126,7 +126,7 @@ export const getWaifuRarities = (): ThunkResult<Promise<any>> => {
     }
 }
 
-export const startSetNotify= (notify: boolean): ThunkResult<any> => {
+export const startSetNotify = (notify: boolean): ThunkResult<any> => {
     return async (dispatch) => {
         const resp = await axios.post('/api/setNotify', {notify});
 
@@ -139,55 +139,57 @@ export const startSetNotify= (notify: boolean): ThunkResult<any> => {
 export const startFirstFetch = (): ThunkResult<any> => {
     return (dispatch) => {
         axios.get('/api/getAllRequests')
-        .then(resp => {
-            // if the user has no requests we do... nothing :)
-            if (resp.data == null) {
-                return;
-            }
-            // else create a Request[] and add all the data
-            // basically convert it to the react type.
-            const reqs: Request[] = resp.data.filter((r: Request) => r.requestState == RequestState.Pending)
-                .map((r: Request) => ({
-                    id: r.id,
-                    imageUrl: r.imageUrl,
-                    name: r.name,
-                    rarity: r.rarity,
-                    requestState: r.requestState,
-                }))
-            // now do the same thing for the logs if they exist
-            const logs: Log[] = resp.data.filter((r: Request) => r.requestState != RequestState.Pending)
-                .map((r: Request) => ({
-                      id: r.id,
-                      accepted: r.requestState == RequestState.Accepted,
-                      waifuName: r.name,
-                      processedTime: new Date(r.processedTime ? r.processedTime.substring(0, 10) : new Date().toString())
-                  }));
+            .then(resp => {
+                // if the user has no requests we do... nothing :)
+                if (resp.data == null) {
+                    return;
+                }
+                // else create a Request[] and add all the data
+                // basically convert it to the react type.
+                const reqs: Request[] = resp.data.filter((r: Request) => r.requestState == RequestState.Pending)
+                    .map((r: Request) => ({
+                        id: r.id,
+                        imageUrl: r.imageUrl,
+                        name: r.name,
+                        rarity: r.rarity,
+                        requestState: r.requestState,
+                    }))
+                // now do the same thing for the logs if they exist
+                const logs: Log[] = resp.data.filter((r: Request) => r.requestState != RequestState.Pending)
+                    .map((r: Request) => ({
+                        id: r.id,
+                        accepted: r.requestState == RequestState.Accepted,
+                        waifuName: r.name,
+                        processedTime: new Date(r.processedTime ? r.processedTime.substring(0, 10) : new Date().toString()),
+                        imageUrl: r.imageUrl,
+                        rejectReason: r.rejectReason,
+                    }));
 
-            // now sort the logs by time
-            logs.sort((a,b) => {
-                return a.processedTime < b.processedTime ? 1 : -1;
-            });
-
-            // get the notify on request bool. This is ugly af but whatever
-            axios.get('/api/getNotify')
-                .then(resp => {
-                    // dispatch it to update the state
-                    dispatch(setRequests(reqs));
-                    dispatch(setLogs(logs));
-                    dispatch(setNotify(resp.data));
-                    // set first fetch so we dont fetch again :)
-                    dispatch(setFirstFetch(true));
-                })
-                .catch(e => {
-                    console.error(e);
-                    // dispatch it to update the state
-                    dispatch(setRequests(reqs));
-                    dispatch(setLogs(logs));
-                    dispatch(setNotify(false));
-                    // set first fetch so we dont fetch again :)
-                    dispatch(setFirstFetch(true));
+                // now sort the logs by time
+                logs.sort((a, b) => {
+                    return a.processedTime < b.processedTime ? 1 : -1;
                 });
-        }).catch(e => {
+
+                // get the notify on request bool. This is ugly af but whatever
+                axios.get('/api/getNotify')
+                    .then(resp => {
+                        // dispatch it to update the state
+                        dispatch(setRequests(reqs));
+                        dispatch(setLogs(logs));
+                        dispatch(setNotify(resp.data));
+                        // set first fetch so we dont fetch again :)
+                        dispatch(setFirstFetch(true));
+                    })
+                    .catch(e => {
+                        console.error(e);
+                        // dispatch it to update the state
+                        dispatch(setRequests(reqs));
+                        dispatch(setLogs(logs));
+                        dispatch(setNotify(false));
+                        // set first fetch so we dont fetch again :)
+                        dispatch(setFirstFetch(true));
+                    });
+            }).catch(e => {
             console.log(e);
             return;
         });
