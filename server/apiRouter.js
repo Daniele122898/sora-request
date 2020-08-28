@@ -35,6 +35,14 @@ const handleError = (res, error) => {
     }
 };
 
+router.get('/health', (req, res) => {
+    res.json({
+        identifier: 'Sora Waifu Requests',
+        status: 0,
+        description: 'Sora companion website that allows users to request Waifus to be added to the Waifuboxes'
+    })
+});
+
 router.get('/checkLogin', (req, res) => {
     if (req.user) {
         res.json({
